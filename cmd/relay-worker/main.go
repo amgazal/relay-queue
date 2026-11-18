@@ -54,6 +54,7 @@ func sleep(ctx context.Context, d time.Duration) error {
 }
 func demos() worker.Registry {
 	return worker.Registry{
+		"demo.noop":  func(context.Context, json.RawMessage) error { return nil },
 		"demo.sleep": func(ctx context.Context, _ json.RawMessage) error { return sleep(ctx, 50*time.Millisecond) },
 		"demo.fail":  func(context.Context, json.RawMessage) error { return errors.New("intentional demonstration failure") },
 		"demo.wait": func(ctx context.Context, p json.RawMessage) error {

@@ -171,3 +171,7 @@ The API exposes Prometheus metrics on a separate loopback listener at `http://12
 ## Webhook demonstration
 
 Workers accept `webhook.deliver` jobs for operator-configured destinations. Relay signs the JSON event, sends it over HTTP, and records the result using ordinary job attempts. The local receiver records one durable inbox entry per event ID. The [webhook guide](docs/WEBHOOKS.md) includes setup, signing, retry rules, and a crash-and-redelivery demonstration.
+
+## Benchmark evidence
+
+A local four-worker SIGKILL test reconciled all 10,003 accepted job IDs: 10,002 succeeded and one deliberately dead-lettered. Thirteen expired attempts were recorded; two signed deliveries of the crash-test event produced one receiver effect. In separate three-repeat local no-op bursts, median completion throughput ranged from 947 jobs/s with one worker process to 1,346 jobs/s with eight. See [methodology, hardware, latency percentiles and limitations](docs/BENCHMARKS.md).

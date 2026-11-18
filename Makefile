@@ -45,3 +45,19 @@ test-integration:
 
 smoke:
 	python3 tests/compose_smoke.py
+
+.PHONY: bench-chaos bench-chaos-full bench-api bench-scale bench-e2e bench-verify bench-clean
+bench-chaos:
+	python3 benchmarks/run.py chaos --chaos-jobs 200
+bench-chaos-full:
+	python3 benchmarks/run.py chaos --chaos-jobs 10000
+bench-api:
+	python3 benchmarks/run.py api
+bench-scale:
+	python3 benchmarks/run.py scale
+bench-e2e:
+	python3 benchmarks/run.py sustained
+bench-verify:
+	python3 benchmarks/verify.py benchmarks/results.json
+bench-clean:
+	python3 benchmarks/cleanup.py "$(PROJECT)"

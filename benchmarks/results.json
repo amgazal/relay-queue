@@ -1,0 +1,3077 @@
+{
+  "initial_relations": "job_attempts|8192|24576\njobs|8192|65536",
+  "project": "relay-bench-340e6550ddb0",
+  "command": [
+    "python3",
+    "benchmarks/run.py",
+    "all",
+    "--jobs",
+    "2000",
+    "--chaos-jobs",
+    "10000",
+    "--seconds",
+    "20",
+    "--rate",
+    "100",
+    "--repeats",
+    "3",
+    "--output",
+    "benchmarks/results.json"
+  ],
+  "hardware": {
+    "architecture": "aarch64",
+    "docker_cpus": 8,
+    "docker_bytes": 8319770624,
+    "engine": "29.7.2",
+    "host": "macOS-27.2.1-arm64-arm-64bit-Mach-O",
+    "host_cpus": 8,
+    "host_bytes": 17179869184,
+    "cpu": "Apple M1"
+  },
+  "go": "go version go1.27.4 linux/arm64",
+  "postgres": "PostgreSQL 17.12 (Debian 17.12-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "k6": "grafana/k6:1.3.0",
+  "commit": "e0b6c9ac9b8436053209e24e3958944267db397b",
+  "settings": {
+    "autovacuum": "on",
+    "effective_cache_size": "5242888kB",
+    "fsync": "on",
+    "max_connections": "100",
+    "max_wal_size": "1024MB",
+    "shared_buffers": "163848kB",
+    "synchronous_commit": "on",
+    "work_mem": "4096kB"
+  },
+  "runs": [
+    {
+      "matched": 2000,
+      "unexpected_ids": 0,
+      "accepted": 2000,
+      "ledger_sha256": "ae5ec9b8b4b1e9e1a0592ae4056650b655f8ea9b2d2e082ba6128a2c078eaa5a",
+      "succeeded": 2000,
+      "dead": 0,
+      "attempts": 2000,
+      "extra_attempts": 0,
+      "expired": 0,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "mode": "api",
+      "replicas": 4,
+      "repeat": 1,
+      "expected": 2000,
+      "load_jobs": 2000,
+      "errors": 0,
+      "replays": 200,
+      "elapsed_s": 1.997,
+      "deadline_s": 300,
+      "http_requests": 2200,
+      "http_span_s": 1.157,
+      "request_rps": 1901.94,
+      "admitted_rps": 1729.04,
+      "enqueue_ms": [
+        6.877,
+        17.831,
+        25.202
+      ],
+      "e2e_ms": [
+        329.144,
+        412.045,
+        417.287
+      ],
+      "completion_rps": 1367.81,
+      "drain_s": 0.309,
+      "samples": [
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 7.3624e-05,
+          "relay_handler_duration_seconds_count": 64.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 0.9328292509999999,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 71.0,
+          "relay_jobs_completed_total": 64.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 0.206
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.0009552609999999998,
+          "relay_handler_duration_seconds_count": 1169.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 14.898104945999986,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 1987.0,
+          "relay_jobs_completed_total": 1159.0,
+          "relay_queue_depth{state=\"queued\"}": 655.0,
+          "lock_waiters": 0,
+          "elapsed_s": 1.438
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.001542076999999996,
+          "relay_handler_duration_seconds_count": 2064.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 17.436087645999965,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 2271.0,
+          "relay_jobs_completed_total": 2064.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 1.997
+        }
+      ],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "208.35%",
+          "MemUsage": "97.64MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-1",
+          "CPUPerc": "20.97%",
+          "MemUsage": "13.5MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-2",
+          "CPUPerc": "21.38%",
+          "MemUsage": "11.59MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-3",
+          "CPUPerc": "21.14%",
+          "MemUsage": "13.84MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-4",
+          "CPUPerc": "20.05%",
+          "MemUsage": "12.11MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.705,
+      "http_rejections": 0
+    },
+    {
+      "matched": 2000,
+      "unexpected_ids": 0,
+      "accepted": 2000,
+      "ledger_sha256": "d7dbba3ef952b59f93417e573a48fd835539af8b91470295400eaa1dfb16a57c",
+      "succeeded": 2000,
+      "dead": 0,
+      "attempts": 2000,
+      "extra_attempts": 0,
+      "expired": 0,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "mode": "api",
+      "replicas": 4,
+      "repeat": 2,
+      "expected": 2000,
+      "load_jobs": 2000,
+      "errors": 0,
+      "replays": 200,
+      "elapsed_s": 2.226,
+      "deadline_s": 300,
+      "http_requests": 2200,
+      "http_span_s": 1.146,
+      "request_rps": 1919.61,
+      "admitted_rps": 1745.1,
+      "enqueue_ms": [
+        7.187,
+        15.755,
+        24.521
+      ],
+      "e2e_ms": [
+        245.41,
+        392.147,
+        397.576
+      ],
+      "completion_rps": 1466.12,
+      "drain_s": 0.223,
+      "samples": [
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.001592746999999996,
+          "relay_handler_duration_seconds_count": 2128.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 18.12151885199995,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 2342.0,
+          "relay_jobs_completed_total": 2128.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 0.217
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.002698035999999994,
+          "relay_handler_duration_seconds_count": 3353.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 32.506659058999986,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 4348.0,
+          "relay_jobs_completed_total": 3348.0,
+          "relay_queue_depth{state=\"queued\"}": 610.0,
+          "lock_waiters": 0,
+          "elapsed_s": 1.392
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.003151322000000003,
+          "relay_handler_duration_seconds_count": 4128.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 34.56868910100004,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 4542.0,
+          "relay_jobs_completed_total": 4128.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 1.928
+        }
+      ],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "118.61%",
+          "MemUsage": "100.5MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-1",
+          "CPUPerc": "13.69%",
+          "MemUsage": "14.32MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-2",
+          "CPUPerc": "20.46%",
+          "MemUsage": "11.09MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-3",
+          "CPUPerc": "13.63%",
+          "MemUsage": "13.89MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-4",
+          "CPUPerc": "13.72%",
+          "MemUsage": "13.45MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.75,
+      "http_rejections": 0
+    },
+    {
+      "matched": 2000,
+      "unexpected_ids": 0,
+      "accepted": 2000,
+      "ledger_sha256": "e0e3514de65161f39633d446c87e3242cf9b2d58544fa850fa14037a9158e23b",
+      "succeeded": 2000,
+      "dead": 0,
+      "attempts": 2000,
+      "extra_attempts": 0,
+      "expired": 0,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "mode": "api",
+      "replicas": 4,
+      "repeat": 3,
+      "expected": 2000,
+      "load_jobs": 2000,
+      "errors": 0,
+      "replays": 200,
+      "elapsed_s": 2.251,
+      "deadline_s": 300,
+      "http_requests": 2200,
+      "http_span_s": 1.091,
+      "request_rps": 2016.2,
+      "admitted_rps": 1832.91,
+      "enqueue_ms": [
+        6.881,
+        14.946,
+        22.269
+      ],
+      "e2e_ms": [
+        219.041,
+        305.664,
+        311.909
+      ],
+      "completion_rps": 1540.98,
+      "drain_s": 0.211,
+      "samples": [
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.0031865680000000033,
+          "relay_handler_duration_seconds_count": 4192.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 35.05086030800002,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 4613.0,
+          "relay_jobs_completed_total": 4192.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 0.232
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.0041798940000000034,
+          "relay_handler_duration_seconds_count": 5491.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 49.18116947600006,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 6615.0,
+          "relay_jobs_completed_total": 5490.0,
+          "relay_queue_depth{state=\"queued\"}": 541.0,
+          "lock_waiters": 0,
+          "elapsed_s": 1.437
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.004547286000000004,
+          "relay_handler_duration_seconds_count": 6192.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 50.56606672300005,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 6813.0,
+          "relay_jobs_completed_total": 6192.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.007
+        }
+      ],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "115.22%",
+          "MemUsage": "103.1MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-1",
+          "CPUPerc": "12.64%",
+          "MemUsage": "14.79MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-2",
+          "CPUPerc": "20.47%",
+          "MemUsage": "11.61MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-3",
+          "CPUPerc": "11.95%",
+          "MemUsage": "14.48MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-4",
+          "CPUPerc": "12.63%",
+          "MemUsage": "14.39MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.771,
+      "http_rejections": 0
+    },
+    {
+      "matched": 2000,
+      "unexpected_ids": 0,
+      "accepted": 2000,
+      "ledger_sha256": "bd9157993a8f46776a975943251eefd267891e538ce97eb527abff83a7fe023a",
+      "succeeded": 2000,
+      "dead": 0,
+      "attempts": 2000,
+      "extra_attempts": 0,
+      "expired": 0,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "mode": "scale",
+      "replicas": 1,
+      "repeat": 1,
+      "expected": 2000,
+      "load_jobs": 2000,
+      "errors": 0,
+      "replays": 200,
+      "elapsed_s": 2.878,
+      "deadline_s": 300,
+      "http_requests": 2200,
+      "http_span_s": 0.783,
+      "request_rps": 2808.31,
+      "admitted_rps": 2553.01,
+      "enqueue_ms": [
+        4.522,
+        10.022,
+        16.785
+      ],
+      "e2e_ms": [
+        855.669,
+        1270.867,
+        1295.993
+      ],
+      "completion_rps": 962.45,
+      "drain_s": 1.299,
+      "samples": [
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.0012681400000000011,
+          "relay_handler_duration_seconds_count": 1607.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 51.035115509000065,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 6884.0,
+          "relay_jobs_completed_total": 1607.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 0.213
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.0016708450000000041,
+          "relay_handler_duration_seconds_count": 2339.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 61.57235608000011,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 9084.0,
+          "relay_jobs_completed_total": 2337.0,
+          "relay_queue_depth{state=\"queued\"}": 1272.0,
+          "lock_waiters": 0,
+          "elapsed_s": 1.387
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.0022785819999999344,
+          "relay_handler_duration_seconds_count": 3607.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 61.57235608000011,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 9084.0,
+          "relay_jobs_completed_total": 3607.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.521
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.0022785819999999344,
+          "relay_handler_duration_seconds_count": 3607.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 61.57235608000011,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 9084.0,
+          "relay_jobs_completed_total": 3607.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.878
+        }
+      ],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "157.16%",
+          "MemUsage": "65.12MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-1",
+          "CPUPerc": "69.89%",
+          "MemUsage": "14.34MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.674,
+      "http_rejections": 0
+    },
+    {
+      "matched": 2000,
+      "unexpected_ids": 0,
+      "accepted": 2000,
+      "ledger_sha256": "9881000898f7a66c01341cad0e4eea364854d0e03441d0fa0ebc9b287f9eb660",
+      "succeeded": 2000,
+      "dead": 0,
+      "attempts": 2000,
+      "extra_attempts": 0,
+      "expired": 0,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "mode": "scale",
+      "replicas": 2,
+      "repeat": 1,
+      "expected": 2000,
+      "load_jobs": 2000,
+      "errors": 0,
+      "replays": 200,
+      "elapsed_s": 2.176,
+      "deadline_s": 300,
+      "http_requests": 2200,
+      "http_span_s": 0.826,
+      "request_rps": 2662.61,
+      "admitted_rps": 2420.55,
+      "enqueue_ms": [
+        5.333,
+        10.327,
+        13.277
+      ],
+      "e2e_ms": [
+        511.275,
+        831.711,
+        843.293
+      ],
+      "completion_rps": 1199.31,
+      "drain_s": 0.844,
+      "samples": [
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.0023240029999999343,
+          "relay_handler_duration_seconds_count": 3671.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 62.07644395800011,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 9155.0,
+          "relay_jobs_completed_total": 3671.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 0.208
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.003069802999999917,
+          "relay_handler_duration_seconds_count": 4719.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 73.49745591200033,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 11355.0,
+          "relay_jobs_completed_total": 4716.0,
+          "relay_queue_depth{state=\"queued\"}": 959.0,
+          "lock_waiters": 0,
+          "elapsed_s": 1.364
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.0036041269999999,
+          "relay_handler_duration_seconds_count": 5671.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 73.49745591200033,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 11355.0,
+          "relay_jobs_completed_total": 5671.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.052
+        }
+      ],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "202.25%",
+          "MemUsage": "82.47MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-1",
+          "CPUPerc": "38.67%",
+          "MemUsage": "15.03MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-2",
+          "CPUPerc": "35.80%",
+          "MemUsage": "11.94MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.66,
+      "http_rejections": 0
+    },
+    {
+      "matched": 2000,
+      "unexpected_ids": 0,
+      "accepted": 2000,
+      "ledger_sha256": "0ccf10f4b496866a649fb36c4d432a76782de1a94f0c851ef509cb931f692dd7",
+      "succeeded": 2000,
+      "dead": 0,
+      "attempts": 2000,
+      "extra_attempts": 0,
+      "expired": 0,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "mode": "scale",
+      "replicas": 4,
+      "repeat": 1,
+      "expected": 2000,
+      "load_jobs": 2000,
+      "errors": 0,
+      "replays": 200,
+      "elapsed_s": 2.289,
+      "deadline_s": 300,
+      "http_requests": 2200,
+      "http_span_s": 1.38,
+      "request_rps": 1594.38,
+      "admitted_rps": 1449.43,
+      "enqueue_ms": [
+        8.54,
+        19.624,
+        30.208
+      ],
+      "e2e_ms": [
+        362.204,
+        491.301,
+        498.222
+      ],
+      "completion_rps": 1123.96,
+      "drain_s": 0.408,
+      "samples": [
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.0036534219999999006,
+          "relay_handler_duration_seconds_count": 5735.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 74.00137753800034,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 11426.0,
+          "relay_jobs_completed_total": 5735.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 0.201
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.0042881429999999015,
+          "relay_handler_duration_seconds_count": 6628.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 87.4440445100002,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 12837.0,
+          "relay_jobs_completed_total": 6619.0,
+          "relay_queue_depth{state=\"queued\"}": 401.0,
+          "lock_waiters": 2,
+          "elapsed_s": 1.397
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.005040392999999897,
+          "relay_handler_duration_seconds_count": 7735.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 93.86750359200013,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 13626.0,
+          "relay_jobs_completed_total": 7735.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.289
+        }
+      ],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "225.03%",
+          "MemUsage": "113.3MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-1",
+          "CPUPerc": "17.95%",
+          "MemUsage": "13.86MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-2",
+          "CPUPerc": "17.80%",
+          "MemUsage": "11.09MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-3",
+          "CPUPerc": "17.58%",
+          "MemUsage": "10.81MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-4",
+          "CPUPerc": "16.45%",
+          "MemUsage": "12.84MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.694,
+      "http_rejections": 0
+    },
+    {
+      "matched": 2000,
+      "unexpected_ids": 0,
+      "accepted": 2000,
+      "ledger_sha256": "7da72f4d0b977f15509eca9427cc3391aa0d560a8ec4d6a2d7e8f1908098f740",
+      "succeeded": 2000,
+      "dead": 0,
+      "attempts": 2000,
+      "extra_attempts": 0,
+      "expired": 0,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "mode": "scale",
+      "replicas": 8,
+      "repeat": 1,
+      "expected": 2000,
+      "load_jobs": 2000,
+      "errors": 0,
+      "replays": 200,
+      "elapsed_s": 2.305,
+      "deadline_s": 300,
+      "http_requests": 2200,
+      "http_span_s": 1.476,
+      "request_rps": 1490.42,
+      "admitted_rps": 1354.93,
+      "enqueue_ms": [
+        9.41,
+        19.612,
+        27.732
+      ],
+      "e2e_ms": [
+        19.807,
+        37.084,
+        60.854
+      ],
+      "completion_rps": 1345.66,
+      "drain_s": 0.018,
+      "samples": [
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.005090180999999897,
+          "relay_handler_duration_seconds_count": 7799.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 94.7638373890002,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 13697.0,
+          "relay_jobs_completed_total": 7799.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 0.258
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.0060388099999998945,
+          "relay_handler_duration_seconds_count": 9157.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 109.15787684700042,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 15165.0,
+          "relay_jobs_completed_total": 9155.0,
+          "relay_queue_depth{state=\"queued\"}": 8.0,
+          "lock_waiters": 0,
+          "elapsed_s": 1.511
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.006489516999999894,
+          "relay_handler_duration_seconds_count": 9799.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 116.28183338900048,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 15897.0,
+          "relay_jobs_completed_total": 9799.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.298
+        }
+      ],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "140.95%",
+          "MemUsage": "174.6MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-1",
+          "CPUPerc": "11.74%",
+          "MemUsage": "13.82MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-2",
+          "CPUPerc": "7.61%",
+          "MemUsage": "11.73MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-3",
+          "CPUPerc": "8.87%",
+          "MemUsage": "12.32MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-4",
+          "CPUPerc": "7.17%",
+          "MemUsage": "13.6MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-5",
+          "CPUPerc": "7.16%",
+          "MemUsage": "10.76MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-6",
+          "CPUPerc": "8.31%",
+          "MemUsage": "10.77MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-7",
+          "CPUPerc": "8.31%",
+          "MemUsage": "10.36MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-8",
+          "CPUPerc": "7.74%",
+          "MemUsage": "10.34MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.754,
+      "http_rejections": 0
+    },
+    {
+      "matched": 2000,
+      "unexpected_ids": 0,
+      "accepted": 2000,
+      "ledger_sha256": "0d9f3d765b31e0726dbe53d755d359cb23118d68450bbf504e1df8698e750ef2",
+      "succeeded": 2000,
+      "dead": 0,
+      "attempts": 2000,
+      "extra_attempts": 0,
+      "expired": 0,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "mode": "scale",
+      "replicas": 8,
+      "repeat": 2,
+      "expected": 2000,
+      "load_jobs": 2000,
+      "errors": 0,
+      "replays": 200,
+      "elapsed_s": 2.285,
+      "deadline_s": 300,
+      "http_requests": 2200,
+      "http_span_s": 1.425,
+      "request_rps": 1543.54,
+      "admitted_rps": 1403.22,
+      "enqueue_ms": [
+        9.162,
+        17.414,
+        25.327
+      ],
+      "e2e_ms": [
+        19.209,
+        40.095,
+        52.856
+      ],
+      "completion_rps": 1392.5,
+      "drain_s": 0.017,
+      "samples": [
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.006549312999999895,
+          "relay_handler_duration_seconds_count": 9863.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 116.95691072500047,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 15968.0,
+          "relay_jobs_completed_total": 9863.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 0.23
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.00744120299999989,
+          "relay_handler_duration_seconds_count": 11235.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 131.18346610500092,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 17455.0,
+          "relay_jobs_completed_total": 11230.0,
+          "relay_queue_depth{state=\"queued\"}": 10.0,
+          "lock_waiters": 0,
+          "elapsed_s": 1.465
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.00786618899999989,
+          "relay_handler_duration_seconds_count": 11863.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 137.94751377800065,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 18168.0,
+          "relay_jobs_completed_total": 11863.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.285
+        }
+      ],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "142.92%",
+          "MemUsage": "180.6MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-1",
+          "CPUPerc": "7.82%",
+          "MemUsage": "14.36MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-2",
+          "CPUPerc": "8.24%",
+          "MemUsage": "11.7MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-3",
+          "CPUPerc": "7.79%",
+          "MemUsage": "12.23MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-4",
+          "CPUPerc": "7.63%",
+          "MemUsage": "13.92MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-5",
+          "CPUPerc": "13.00%",
+          "MemUsage": "10.27MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-6",
+          "CPUPerc": "7.98%",
+          "MemUsage": "10.92MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-7",
+          "CPUPerc": "7.59%",
+          "MemUsage": "10.89MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-8",
+          "CPUPerc": "7.26%",
+          "MemUsage": "10.36MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.709,
+      "http_rejections": 0
+    },
+    {
+      "matched": 2000,
+      "unexpected_ids": 0,
+      "accepted": 2000,
+      "ledger_sha256": "62b0d4e0bcd8b999830ef531f79dfdfe0d0268c67290092b585415fa9a9b7a75",
+      "succeeded": 2000,
+      "dead": 0,
+      "attempts": 2000,
+      "extra_attempts": 0,
+      "expired": 0,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "mode": "scale",
+      "replicas": 4,
+      "repeat": 2,
+      "expected": 2000,
+      "load_jobs": 2000,
+      "errors": 0,
+      "replays": 200,
+      "elapsed_s": 2.236,
+      "deadline_s": 300,
+      "http_requests": 2200,
+      "http_span_s": 1.226,
+      "request_rps": 1794.02,
+      "admitted_rps": 1630.93,
+      "enqueue_ms": [
+        7.296,
+        18.716,
+        33.422
+      ],
+      "e2e_ms": [
+        188.377,
+        464.34,
+        482.542
+      ],
+      "completion_rps": 1288.23,
+      "drain_s": 0.33,
+      "samples": [
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.00651130099999989,
+          "relay_handler_duration_seconds_count": 9873.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 138.43998490400057,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 18239.0,
+          "relay_jobs_completed_total": 9873.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 0.235
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.007357716999999882,
+          "relay_handler_duration_seconds_count": 11100.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 152.38560325800074,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 20112.0,
+          "relay_jobs_completed_total": 11092.0,
+          "relay_queue_depth{state=\"queued\"}": 505.0,
+          "lock_waiters": 0,
+          "elapsed_s": 1.503
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.007813540999999874,
+          "relay_handler_duration_seconds_count": 11873.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 156.05253163600068,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 20439.0,
+          "relay_jobs_completed_total": 11873.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.111
+        }
+      ],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "212.29%",
+          "MemUsage": "124.6MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-1",
+          "CPUPerc": "14.51%",
+          "MemUsage": "14.9MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-2",
+          "CPUPerc": "14.94%",
+          "MemUsage": "12.46MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-3",
+          "CPUPerc": "14.68%",
+          "MemUsage": "12.23MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-4",
+          "CPUPerc": "14.81%",
+          "MemUsage": "13.66MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.686,
+      "http_rejections": 0
+    },
+    {
+      "matched": 2000,
+      "unexpected_ids": 0,
+      "accepted": 2000,
+      "ledger_sha256": "d50279ffd11980c70069cda28ddb0e54982bb00aeb127c72224eff0fa30cf100",
+      "succeeded": 2000,
+      "dead": 0,
+      "attempts": 2000,
+      "extra_attempts": 0,
+      "expired": 0,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "mode": "scale",
+      "replicas": 2,
+      "repeat": 2,
+      "expected": 2000,
+      "load_jobs": 2000,
+      "errors": 0,
+      "replays": 200,
+      "elapsed_s": 2.302,
+      "deadline_s": 300,
+      "http_requests": 2200,
+      "http_span_s": 0.782,
+      "request_rps": 2812.4,
+      "admitted_rps": 2556.72,
+      "enqueue_ms": [
+        4.999,
+        9.633,
+        14.783
+      ],
+      "e2e_ms": [
+        487.136,
+        783.047,
+        800.937
+      ],
+      "completion_rps": 1263.73,
+      "drain_s": 0.803,
+      "samples": [
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.005686548999999882,
+          "relay_handler_duration_seconds_count": 8831.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 156.51875780400067,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 20510.0,
+          "relay_jobs_completed_total": 8831.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 0.224
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.006355264999999883,
+          "relay_handler_duration_seconds_count": 9997.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 167.4299127330002,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 22710.0,
+          "relay_jobs_completed_total": 9997.0,
+          "relay_queue_depth{state=\"queued\"}": 842.0,
+          "lock_waiters": 0,
+          "elapsed_s": 1.437
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.00681714899999988,
+          "relay_handler_duration_seconds_count": 10831.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 167.4299127330002,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 22710.0,
+          "relay_jobs_completed_total": 10831.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.302
+        }
+      ],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "147.35%",
+          "MemUsage": "97.9MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-1",
+          "CPUPerc": "32.64%",
+          "MemUsage": "13.76MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-2",
+          "CPUPerc": "30.04%",
+          "MemUsage": "12.51MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.643,
+      "http_rejections": 0
+    },
+    {
+      "matched": 2000,
+      "unexpected_ids": 0,
+      "accepted": 2000,
+      "ledger_sha256": "3ab2c680c0dd2e3ab3f6fa66114d27cb58dd9ef2226b5313b00226e979d53423",
+      "succeeded": 2000,
+      "dead": 0,
+      "attempts": 2000,
+      "extra_attempts": 0,
+      "expired": 0,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "mode": "scale",
+      "replicas": 1,
+      "repeat": 2,
+      "expected": 2000,
+      "load_jobs": 2000,
+      "errors": 0,
+      "replays": 200,
+      "elapsed_s": 2.634,
+      "deadline_s": 300,
+      "http_requests": 2200,
+      "http_span_s": 0.794,
+      "request_rps": 2771.91,
+      "admitted_rps": 2519.92,
+      "enqueue_ms": [
+        4.477,
+        11.891,
+        22.654
+      ],
+      "e2e_ms": [
+        868.971,
+        1263.493,
+        1311.213
+      ],
+      "completion_rps": 946.96,
+      "drain_s": 1.321,
+      "samples": [
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.004549420999999921,
+          "relay_handler_duration_seconds_count": 7334.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 167.79578315400016,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 22781.0,
+          "relay_jobs_completed_total": 7334.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 0.177
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.004904700999999946,
+          "relay_handler_duration_seconds_count": 7970.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 178.67806196199996,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 24981.0,
+          "relay_jobs_completed_total": 7970.0,
+          "relay_queue_depth{state=\"queued\"}": 1372.0,
+          "lock_waiters": 0,
+          "elapsed_s": 1.341
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.005550569000000044,
+          "relay_handler_duration_seconds_count": 9334.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 178.67806196199996,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 24981.0,
+          "relay_jobs_completed_total": 9334.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.481
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.005550569000000044,
+          "relay_handler_duration_seconds_count": 9334.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 178.67806196199996,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 24981.0,
+          "relay_jobs_completed_total": 9334.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.633
+        }
+      ],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "153.41%",
+          "MemUsage": "84.35MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-1",
+          "CPUPerc": "35.32%",
+          "MemUsage": "15.12MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.684,
+      "http_rejections": 0
+    },
+    {
+      "matched": 2000,
+      "unexpected_ids": 0,
+      "accepted": 2000,
+      "ledger_sha256": "964f07fd1001be05fabba3ed621c4bf224283590089c2bc742f728ce7847ec4b",
+      "succeeded": 2000,
+      "dead": 0,
+      "attempts": 2000,
+      "extra_attempts": 0,
+      "expired": 0,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "mode": "scale",
+      "replicas": 1,
+      "repeat": 3,
+      "expected": 2000,
+      "load_jobs": 2000,
+      "errors": 0,
+      "replays": 200,
+      "elapsed_s": 2.824,
+      "deadline_s": 300,
+      "http_requests": 2200,
+      "http_span_s": 0.671,
+      "request_rps": 3276.58,
+      "admitted_rps": 2978.71,
+      "enqueue_ms": [
+        4.092,
+        9.197,
+        16.747
+      ],
+      "e2e_ms": [
+        1119.966,
+        1439.375,
+        1452.339
+      ],
+      "completion_rps": 941.29,
+      "drain_s": 1.456,
+      "samples": [
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.005598030000000043,
+          "relay_handler_duration_seconds_count": 9398.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 179.0981358369999,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 25052.0,
+          "relay_jobs_completed_total": 9398.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 0.259
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.006005362000000088,
+          "relay_handler_duration_seconds_count": 10136.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 188.12869423999987,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 27252.0,
+          "relay_jobs_completed_total": 10136.0,
+          "relay_queue_depth{state=\"queued\"}": 1265.0,
+          "lock_waiters": 0,
+          "elapsed_s": 1.58
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.006551275000000189,
+          "relay_handler_duration_seconds_count": 11398.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 188.12869423999987,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 27252.0,
+          "relay_jobs_completed_total": 11398.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.709
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.006551275000000189,
+          "relay_handler_duration_seconds_count": 11398.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 188.12869423999987,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 27252.0,
+          "relay_jobs_completed_total": 11398.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.824
+        }
+      ],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "147.77%",
+          "MemUsage": "86.03MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-1",
+          "CPUPerc": "47.39%",
+          "MemUsage": "13.77MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.703,
+      "http_rejections": 0
+    },
+    {
+      "matched": 2000,
+      "unexpected_ids": 0,
+      "accepted": 2000,
+      "ledger_sha256": "bca97d482bc24d30e6b1e89d3c00ade942b370c820c7d715d8fc979f869d43de",
+      "succeeded": 2000,
+      "dead": 0,
+      "attempts": 2000,
+      "extra_attempts": 0,
+      "expired": 0,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "mode": "scale",
+      "replicas": 2,
+      "repeat": 3,
+      "expected": 2000,
+      "load_jobs": 2000,
+      "errors": 0,
+      "replays": 200,
+      "elapsed_s": 2.524,
+      "deadline_s": 300,
+      "http_requests": 2200,
+      "http_span_s": 1.186,
+      "request_rps": 1854.66,
+      "admitted_rps": 1686.05,
+      "enqueue_ms": [
+        6.964,
+        17.533,
+        41.255
+      ],
+      "e2e_ms": [
+        715.889,
+        772.444,
+        778.261
+      ],
+      "completion_rps": 1041.69,
+      "drain_s": 0.738,
+      "samples": [
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.00660077300000019,
+          "relay_handler_duration_seconds_count": 11462.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 188.81505316099995,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 27323.0,
+          "relay_jobs_completed_total": 11462.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 0.197
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.007192644000000198,
+          "relay_handler_duration_seconds_count": 12013.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 201.9478225200002,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 29114.0,
+          "relay_jobs_completed_total": 12010.0,
+          "relay_queue_depth{state=\"queued\"}": 1090.0,
+          "lock_waiters": 0,
+          "elapsed_s": 1.424
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.007949932000000251,
+          "relay_handler_duration_seconds_count": 13462.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 205.08146406400033,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 29523.0,
+          "relay_jobs_completed_total": 13462.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.524
+        }
+      ],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "198.06%",
+          "MemUsage": "103.2MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-1",
+          "CPUPerc": "28.47%",
+          "MemUsage": "14.91MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-2",
+          "CPUPerc": "26.77%",
+          "MemUsage": "13.74MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.761,
+      "http_rejections": 0
+    },
+    {
+      "matched": 2000,
+      "unexpected_ids": 0,
+      "accepted": 2000,
+      "ledger_sha256": "8a4d930cd8f604b08a8b152009a5d2efa1db675f02e850b7831bc991a6993149",
+      "succeeded": 2000,
+      "dead": 0,
+      "attempts": 2000,
+      "extra_attempts": 0,
+      "expired": 0,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "mode": "scale",
+      "replicas": 4,
+      "repeat": 3,
+      "expected": 2000,
+      "load_jobs": 2000,
+      "errors": 0,
+      "replays": 200,
+      "elapsed_s": 2.246,
+      "deadline_s": 300,
+      "http_requests": 2200,
+      "http_span_s": 1.259,
+      "request_rps": 1747.74,
+      "admitted_rps": 1588.86,
+      "enqueue_ms": [
+        7.567,
+        18.18,
+        30.629
+      ],
+      "e2e_ms": [
+        252.423,
+        452.842,
+        461.345
+      ],
+      "completion_rps": 1347.3,
+      "drain_s": 0.229,
+      "samples": [
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.007996100000000252,
+          "relay_handler_duration_seconds_count": 13526.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 205.6776637740003,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 29594.0,
+          "relay_jobs_completed_total": 13526.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 0.244
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.008939027000000254,
+          "relay_handler_duration_seconds_count": 14644.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 219.21718063400036,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 31414.0,
+          "relay_jobs_completed_total": 14638.0,
+          "relay_queue_depth{state=\"queued\"}": 576.0,
+          "lock_waiters": 0,
+          "elapsed_s": 1.506
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.009409773000000265,
+          "relay_handler_duration_seconds_count": 15526.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 223.4435071900005,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 31794.0,
+          "relay_jobs_completed_total": 15526.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.209
+        }
+      ],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "168.37%",
+          "MemUsage": "133.7MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-1",
+          "CPUPerc": "15.99%",
+          "MemUsage": "14.83MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-2",
+          "CPUPerc": "17.35%",
+          "MemUsage": "14.51MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-3",
+          "CPUPerc": "16.78%",
+          "MemUsage": "13.56MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-4",
+          "CPUPerc": "17.24%",
+          "MemUsage": "11.67MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.695,
+      "http_rejections": 0
+    },
+    {
+      "matched": 2000,
+      "unexpected_ids": 0,
+      "accepted": 2000,
+      "ledger_sha256": "6b59d70bc44b21e4bcdebfe94f5c70c9bf572c517480c7928c84f25f64d6f276",
+      "succeeded": 2000,
+      "dead": 0,
+      "attempts": 2000,
+      "extra_attempts": 0,
+      "expired": 0,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "mode": "scale",
+      "replicas": 8,
+      "repeat": 3,
+      "expected": 2000,
+      "load_jobs": 2000,
+      "errors": 0,
+      "replays": 200,
+      "elapsed_s": 2.509,
+      "deadline_s": 300,
+      "http_requests": 2200,
+      "http_span_s": 1.584,
+      "request_rps": 1388.82,
+      "admitted_rps": 1262.56,
+      "enqueue_ms": [
+        9.982,
+        19.804,
+        27.656
+      ],
+      "e2e_ms": [
+        21.657,
+        41.799,
+        84.001
+      ],
+      "completion_rps": 1248.31,
+      "drain_s": 0.021,
+      "samples": [
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.009466942000000264,
+          "relay_handler_duration_seconds_count": 15590.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 224.79397986600054,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 31865.0,
+          "relay_jobs_completed_total": 15590.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 0.209
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.012073780000000261,
+          "relay_handler_duration_seconds_count": 16753.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 238.5442607520006,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 33116.0,
+          "relay_jobs_completed_total": 16747.0,
+          "relay_queue_depth{state=\"queued\"}": 7.0,
+          "lock_waiters": 4,
+          "elapsed_s": 1.482
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 0.013679400000000265,
+          "relay_handler_duration_seconds_count": 17590.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 248.06107371699997,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 34065.0,
+          "relay_jobs_completed_total": 17590.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.509
+        }
+      ],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "178.64%",
+          "MemUsage": "193.5MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-1",
+          "CPUPerc": "9.04%",
+          "MemUsage": "13.94MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-2",
+          "CPUPerc": "10.70%",
+          "MemUsage": "14.39MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-3",
+          "CPUPerc": "10.23%",
+          "MemUsage": "13.78MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-4",
+          "CPUPerc": "9.25%",
+          "MemUsage": "11.83MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-5",
+          "CPUPerc": "11.27%",
+          "MemUsage": "7.598MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-6",
+          "CPUPerc": "8.68%",
+          "MemUsage": "10.46MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-7",
+          "CPUPerc": "7.97%",
+          "MemUsage": "8.047MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-8",
+          "CPUPerc": "8.59%",
+          "MemUsage": "13.55MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.752,
+      "http_rejections": 0
+    },
+    {
+      "matched": 2000,
+      "unexpected_ids": 0,
+      "accepted": 2000,
+      "ledger_sha256": "2792581cfcaff3534487d1a1421a94dfb331ce55e7ed53e7a54c427a735acb92",
+      "succeeded": 2000,
+      "dead": 0,
+      "attempts": 2000,
+      "extra_attempts": 0,
+      "expired": 0,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "mode": "sustained",
+      "replicas": 4,
+      "repeat": 1,
+      "expected": 2000,
+      "load_jobs": 2000,
+      "errors": 0,
+      "replays": 200,
+      "elapsed_s": 20.833,
+      "deadline_s": 300,
+      "http_requests": 2200,
+      "http_span_s": 19.99,
+      "request_rps": 110.06,
+      "admitted_rps": 100.05,
+      "enqueue_ms": [
+        0.79,
+        2.003,
+        8.0
+      ],
+      "e2e_ms": [
+        55.163,
+        61.631,
+        73.105
+      ],
+      "completion_rps": 99.78,
+      "drain_s": 0.056,
+      "samples": [
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 3.2454268010000007,
+          "relay_handler_duration_seconds_count": 16662.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 248.50505854599996,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 34136.0,
+          "relay_jobs_completed_total": 16662.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 0.196
+        },
+        {
+          "relay_active_handlers": 4.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 7.899919889000001,
+          "relay_handler_duration_seconds_count": 16754.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 248.58197083499985,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 34242.0,
+          "relay_jobs_completed_total": 16754.0,
+          "relay_queue_depth{state=\"queued\"}": 1.0,
+          "lock_waiters": 0,
+          "elapsed_s": 1.345
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 13.671067393000001,
+          "relay_handler_duration_seconds_count": 16868.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 248.6702473439997,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 34368.0,
+          "relay_jobs_completed_total": 16868.0,
+          "relay_queue_depth{state=\"queued\"}": 1.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.479
+        },
+        {
+          "relay_active_handlers": 4.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 19.441481932000002,
+          "relay_handler_duration_seconds_count": 16982.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 248.74897255799965,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 34493.0,
+          "relay_jobs_completed_total": 16981.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 3.604
+        },
+        {
+          "relay_active_handlers": 4.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 25.106058726,
+          "relay_handler_duration_seconds_count": 17094.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 248.82882826699972,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 34616.0,
+          "relay_jobs_completed_total": 17094.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 4.748
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 30.875643939000003,
+          "relay_handler_duration_seconds_count": 17208.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 248.9066125149997,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 34743.0,
+          "relay_jobs_completed_total": 17208.0,
+          "relay_queue_depth{state=\"queued\"}": 1.0,
+          "lock_waiters": 0,
+          "elapsed_s": 5.881
+        },
+        {
+          "relay_active_handlers": 4.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 36.72279227800001,
+          "relay_handler_duration_seconds_count": 17322.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 248.9994874309996,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 34867.0,
+          "relay_jobs_completed_total": 17322.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 7.115
+        },
+        {
+          "relay_active_handlers": 4.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 43.00896415000002,
+          "relay_handler_duration_seconds_count": 17446.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 249.18791525899957,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 35003.0,
+          "relay_jobs_completed_total": 17444.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 8.261
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 48.771116616000015,
+          "relay_handler_duration_seconds_count": 17560.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 249.29542121699942,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 35129.0,
+          "relay_jobs_completed_total": 17560.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 9.398
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 54.507708489000024,
+          "relay_handler_duration_seconds_count": 17673.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 249.45757867599934,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 35254.0,
+          "relay_jobs_completed_total": 17673.0,
+          "relay_queue_depth{state=\"queued\"}": 1.0,
+          "lock_waiters": 0,
+          "elapsed_s": 10.538
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 60.27830628400001,
+          "relay_handler_duration_seconds_count": 17787.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 249.55363805699938,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 35379.0,
+          "relay_jobs_completed_total": 17787.0,
+          "relay_queue_depth{state=\"queued\"}": 1.0,
+          "lock_waiters": 0,
+          "elapsed_s": 11.683
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 66.09758882600002,
+          "relay_handler_duration_seconds_count": 17902.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 249.64671768199943,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 35506.0,
+          "relay_jobs_completed_total": 17902.0,
+          "relay_queue_depth{state=\"queued\"}": 1.0,
+          "lock_waiters": 0,
+          "elapsed_s": 12.842
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 71.971739464,
+          "relay_handler_duration_seconds_count": 18018.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 249.73711572499957,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 35632.0,
+          "relay_jobs_completed_total": 18018.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 13.984
+        },
+        {
+          "relay_active_handlers": 4.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 77.77535991900001,
+          "relay_handler_duration_seconds_count": 18132.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 249.88699576299948,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 35758.0,
+          "relay_jobs_completed_total": 18132.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 15.129
+        },
+        {
+          "relay_active_handlers": 6.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 83.53685933700001,
+          "relay_handler_duration_seconds_count": 18246.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 249.97214201599937,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 35884.0,
+          "relay_jobs_completed_total": 18246.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 16.3
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 89.50769520700003,
+          "relay_handler_duration_seconds_count": 18364.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 250.05528089199927,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 36013.0,
+          "relay_jobs_completed_total": 18363.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 17.432
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 95.22037692100005,
+          "relay_handler_duration_seconds_count": 18477.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 250.13271472699918,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 36137.0,
+          "relay_jobs_completed_total": 18477.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 18.577
+        },
+        {
+          "relay_active_handlers": 6.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 100.99413380100003,
+          "relay_handler_duration_seconds_count": 18591.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 250.2252866849992,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 36264.0,
+          "relay_jobs_completed_total": 18591.0,
+          "relay_queue_depth{state=\"queued\"}": 1.0,
+          "lock_waiters": 0,
+          "elapsed_s": 19.798
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 104.59811947100002,
+          "relay_handler_duration_seconds_count": 18662.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 250.32614806099932,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 36336.0,
+          "relay_jobs_completed_total": 18662.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 20.833
+        }
+      ],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "24.51%",
+          "MemUsage": "136.9MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-1",
+          "CPUPerc": "3.69%",
+          "MemUsage": "14.14MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-2",
+          "CPUPerc": "3.35%",
+          "MemUsage": "13.68MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-3",
+          "CPUPerc": "3.82%",
+          "MemUsage": "14.33MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-4",
+          "CPUPerc": "3.59%",
+          "MemUsage": "11.95MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.653,
+      "http_rejections": 0
+    },
+    {
+      "matched": 2000,
+      "unexpected_ids": 0,
+      "accepted": 2000,
+      "ledger_sha256": "363bdb0ad082722eb05c0a4a12e6d7b9fefb8b940ec0d01b80a2dd48adce5dfd",
+      "succeeded": 2000,
+      "dead": 0,
+      "attempts": 2000,
+      "extra_attempts": 0,
+      "expired": 0,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "mode": "sustained",
+      "replicas": 4,
+      "repeat": 2,
+      "expected": 2000,
+      "load_jobs": 2000,
+      "errors": 0,
+      "replays": 200,
+      "elapsed_s": 21.022,
+      "deadline_s": 300,
+      "http_requests": 2200,
+      "http_span_s": 19.991,
+      "request_rps": 110.05,
+      "admitted_rps": 100.04,
+      "enqueue_ms": [
+        0.782,
+        2.263,
+        18.252
+      ],
+      "e2e_ms": [
+        55.035,
+        61.786,
+        94.981
+      ],
+      "completion_rps": 99.77,
+      "drain_s": 0.055,
+      "samples": [
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 107.82604539600001,
+          "relay_handler_duration_seconds_count": 18726.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 250.9332562709994,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 36407.0,
+          "relay_jobs_completed_total": 18726.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 0.228
+        },
+        {
+          "relay_active_handlers": 6.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 112.682901024,
+          "relay_handler_duration_seconds_count": 18822.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 251.00742531399945,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 36519.0,
+          "relay_jobs_completed_total": 18822.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 1.358
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 118.44567515000001,
+          "relay_handler_duration_seconds_count": 18936.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 251.0824076909993,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 36643.0,
+          "relay_jobs_completed_total": 18936.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.49
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 124.15702803100004,
+          "relay_handler_duration_seconds_count": 19049.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 251.15773706599924,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 36768.0,
+          "relay_jobs_completed_total": 19049.0,
+          "relay_queue_depth{state=\"queued\"}": 1.0,
+          "lock_waiters": 0,
+          "elapsed_s": 3.637
+        },
+        {
+          "relay_active_handlers": 4.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 129.97501712100006,
+          "relay_handler_duration_seconds_count": 19164.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 251.23614610199925,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 36894.0,
+          "relay_jobs_completed_total": 19164.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 4.775
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 135.68490600000004,
+          "relay_handler_duration_seconds_count": 19277.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 251.36520318799933,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 37019.0,
+          "relay_jobs_completed_total": 19277.0,
+          "relay_queue_depth{state=\"queued\"}": 1.0,
+          "lock_waiters": 0,
+          "elapsed_s": 5.909
+        },
+        {
+          "relay_active_handlers": 6.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 141.40385008200008,
+          "relay_handler_duration_seconds_count": 19390.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 251.44184672999938,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 37143.0,
+          "relay_jobs_completed_total": 19390.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 7.085
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 147.37348546000007,
+          "relay_handler_duration_seconds_count": 19508.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 251.55893493299936,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 37273.0,
+          "relay_jobs_completed_total": 19508.0,
+          "relay_queue_depth{state=\"queued\"}": 1.0,
+          "lock_waiters": 0,
+          "elapsed_s": 8.213
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 153.1457778790001,
+          "relay_handler_duration_seconds_count": 19621.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 251.68170543099941,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 37396.0,
+          "relay_jobs_completed_total": 19621.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 9.357
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 158.9085745060001,
+          "relay_handler_duration_seconds_count": 19735.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 251.76473138799955,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 37523.0,
+          "relay_jobs_completed_total": 19735.0,
+          "relay_queue_depth{state=\"queued\"}": 1.0,
+          "lock_waiters": 0,
+          "elapsed_s": 10.489
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 164.66919580500013,
+          "relay_handler_duration_seconds_count": 19849.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 252.1472515539996,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 37647.0,
+          "relay_jobs_completed_total": 19849.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 11.628
+        },
+        {
+          "relay_active_handlers": 6.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 170.38143931100012,
+          "relay_handler_duration_seconds_count": 19962.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 252.22481105499963,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 37773.0,
+          "relay_jobs_completed_total": 19962.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 12.753
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 176.10186485400015,
+          "relay_handler_duration_seconds_count": 20075.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 252.29887367899966,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 37897.0,
+          "relay_jobs_completed_total": 20075.0,
+          "relay_queue_depth{state=\"queued\"}": 1.0,
+          "lock_waiters": 0,
+          "elapsed_s": 13.886
+        },
+        {
+          "relay_active_handlers": 4.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 181.86876602000015,
+          "relay_handler_duration_seconds_count": 20189.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 252.38378838699964,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 38021.0,
+          "relay_jobs_completed_total": 20189.0,
+          "relay_queue_depth{state=\"queued\"}": 1.0,
+          "lock_waiters": 0,
+          "elapsed_s": 15.178
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 188.47111118900014,
+          "relay_handler_duration_seconds_count": 20318.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 253.0338827289996,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 38163.0,
+          "relay_jobs_completed_total": 20318.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 16.323
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 194.24143478400018,
+          "relay_handler_duration_seconds_count": 20432.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 253.12773085099963,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 38288.0,
+          "relay_jobs_completed_total": 20432.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 17.466
+        },
+        {
+          "relay_active_handlers": 4.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 200.00856466500022,
+          "relay_handler_duration_seconds_count": 20546.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 253.22579160599963,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 38415.0,
+          "relay_jobs_completed_total": 20546.0,
+          "relay_queue_depth{state=\"queued\"}": 1.0,
+          "lock_waiters": 0,
+          "elapsed_s": 18.606
+        },
+        {
+          "relay_active_handlers": 6.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 205.78104924200017,
+          "relay_handler_duration_seconds_count": 20660.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 253.3254062749996,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 38540.0,
+          "relay_jobs_completed_total": 20660.0,
+          "relay_queue_depth{state=\"queued\"}": 1.0,
+          "lock_waiters": 0,
+          "elapsed_s": 19.751
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 209.11947641200018,
+          "relay_handler_duration_seconds_count": 20726.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 253.36855327099968,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 38607.0,
+          "relay_jobs_completed_total": 20726.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 20.901
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 209.11947641200018,
+          "relay_handler_duration_seconds_count": 20726.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 253.36855327099968,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 38607.0,
+          "relay_jobs_completed_total": 20726.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 21.022
+        }
+      ],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "22.96%",
+          "MemUsage": "139.4MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-1",
+          "CPUPerc": "3.01%",
+          "MemUsage": "14.09MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-2",
+          "CPUPerc": "2.95%",
+          "MemUsage": "13.6MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-3",
+          "CPUPerc": "3.21%",
+          "MemUsage": "13.38MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-4",
+          "CPUPerc": "3.26%",
+          "MemUsage": "11.53MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.731,
+      "http_rejections": 0
+    },
+    {
+      "matched": 2000,
+      "unexpected_ids": 0,
+      "accepted": 2000,
+      "ledger_sha256": "50dda70f59799f7c09cfd79f7217b791ecfeaffaf7e23efb156894d3b972693a",
+      "succeeded": 2000,
+      "dead": 0,
+      "attempts": 2000,
+      "extra_attempts": 0,
+      "expired": 0,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "mode": "sustained",
+      "replicas": 4,
+      "repeat": 3,
+      "expected": 2000,
+      "load_jobs": 2000,
+      "errors": 0,
+      "replays": 200,
+      "elapsed_s": 20.945,
+      "deadline_s": 300,
+      "http_requests": 2200,
+      "http_span_s": 19.99,
+      "request_rps": 110.05,
+      "admitted_rps": 100.05,
+      "enqueue_ms": [
+        0.788,
+        2.194,
+        5.836
+      ],
+      "e2e_ms": [
+        55.149,
+        61.466,
+        68.263
+      ],
+      "completion_rps": 99.79,
+      "drain_s": 0.053,
+      "samples": [
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 212.34810553800017,
+          "relay_handler_duration_seconds_count": 20790.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 253.88026010399972,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 38678.0,
+          "relay_jobs_completed_total": 20790.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 0.22
+        },
+        {
+          "relay_active_handlers": 4.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 217.20786721300016,
+          "relay_handler_duration_seconds_count": 20886.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 253.97169188399965,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 38787.0,
+          "relay_jobs_completed_total": 20886.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 1.458
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 223.38508408800016,
+          "relay_handler_duration_seconds_count": 21008.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 254.13253971199975,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 38924.0,
+          "relay_jobs_completed_total": 21008.0,
+          "relay_queue_depth{state=\"queued\"}": 1.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.6
+        },
+        {
+          "relay_active_handlers": 4.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 229.20683809400015,
+          "relay_handler_duration_seconds_count": 21123.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 254.27788474299987,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 39049.0,
+          "relay_jobs_completed_total": 21123.0,
+          "relay_queue_depth{state=\"queued\"}": 1.0,
+          "lock_waiters": 0,
+          "elapsed_s": 3.733
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 234.92638934300015,
+          "relay_handler_duration_seconds_count": 21236.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 254.3656430789997,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 39173.0,
+          "relay_jobs_completed_total": 21236.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 4.894
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 240.79419105200017,
+          "relay_handler_duration_seconds_count": 21352.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 254.45850149399976,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 39301.0,
+          "relay_jobs_completed_total": 21352.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 6.037
+        },
+        {
+          "relay_active_handlers": 4.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 246.60808072100016,
+          "relay_handler_duration_seconds_count": 21467.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 254.55091770400003,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 39426.0,
+          "relay_jobs_completed_total": 21465.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 7.223
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 252.5731475520002,
+          "relay_handler_duration_seconds_count": 21585.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 254.644330581,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 39557.0,
+          "relay_jobs_completed_total": 21585.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 8.36
+        },
+        {
+          "relay_active_handlers": 4.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 258.34548130800016,
+          "relay_handler_duration_seconds_count": 21699.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 254.7353165370001,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 39683.0,
+          "relay_jobs_completed_total": 21698.0,
+          "relay_queue_depth{state=\"queued\"}": 1.0,
+          "lock_waiters": 0,
+          "elapsed_s": 9.494
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 264.05805460900024,
+          "relay_handler_duration_seconds_count": 21812.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 254.8159232050003,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 39807.0,
+          "relay_jobs_completed_total": 21812.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 10.649
+        },
+        {
+          "relay_active_handlers": 4.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 269.9702420710002,
+          "relay_handler_duration_seconds_count": 21928.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 255.04981449700023,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 39935.0,
+          "relay_jobs_completed_total": 21927.0,
+          "relay_queue_depth{state=\"queued\"}": 1.0,
+          "lock_waiters": 0,
+          "elapsed_s": 11.798
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 275.7309435810002,
+          "relay_handler_duration_seconds_count": 22042.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 255.13134783600026,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 40060.0,
+          "relay_jobs_completed_total": 22042.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 12.956
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 281.5986657130002,
+          "relay_handler_duration_seconds_count": 22158.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 255.2324452990004,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 40188.0,
+          "relay_jobs_completed_total": 22158.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 14.112
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 287.42399713400016,
+          "relay_handler_duration_seconds_count": 22273.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 255.32328058600044,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 40315.0,
+          "relay_jobs_completed_total": 22273.0,
+          "relay_queue_depth{state=\"queued\"}": 1.0,
+          "lock_waiters": 0,
+          "elapsed_s": 15.275
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 293.33965255600015,
+          "relay_handler_duration_seconds_count": 22390.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 255.4166768800002,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 40443.0,
+          "relay_jobs_completed_total": 22390.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 16.416
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 299.10013202000016,
+          "relay_handler_duration_seconds_count": 22504.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 255.4931083770002,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 40568.0,
+          "relay_jobs_completed_total": 22504.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 17.553
+        },
+        {
+          "relay_active_handlers": 4.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 304.8651907370002,
+          "relay_handler_duration_seconds_count": 22618.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 255.56979142700027,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 40694.0,
+          "relay_jobs_completed_total": 22617.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 18.704
+        },
+        {
+          "relay_active_handlers": 5.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 310.68679853500015,
+          "relay_handler_duration_seconds_count": 22733.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 255.66476642900045,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 40820.0,
+          "relay_jobs_completed_total": 22733.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 19.849
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 313.60045457700016,
+          "relay_handler_duration_seconds_count": 22790.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 255.74201996500048,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 40878.0,
+          "relay_jobs_completed_total": 22790.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 20.944
+        }
+      ],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "34.17%",
+          "MemUsage": "142.4MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-1",
+          "CPUPerc": "3.40%",
+          "MemUsage": "14.75MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-2",
+          "CPUPerc": "3.26%",
+          "MemUsage": "14.56MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-3",
+          "CPUPerc": "3.91%",
+          "MemUsage": "13.75MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-4",
+          "CPUPerc": "3.99%",
+          "MemUsage": "12.31MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.668,
+      "http_rejections": 0
+    },
+    {
+      "matched": 2000,
+      "unexpected_ids": 0,
+      "accepted": 2000,
+      "ledger_sha256": "2d6bf0cfa724ca1613a985b91553126e4947e0412800ca06d97b46ebf04beaf1",
+      "succeeded": 2000,
+      "dead": 0,
+      "attempts": 2000,
+      "extra_attempts": 0,
+      "expired": 0,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "receiver_effects": 2000,
+      "mode": "webhook",
+      "replicas": 4,
+      "repeat": 1,
+      "expected": 2000,
+      "load_jobs": 2000,
+      "errors": 0,
+      "replays": 200,
+      "elapsed_s": 2.775,
+      "deadline_s": 300,
+      "http_requests": 2200,
+      "http_span_s": 1.403,
+      "request_rps": 1568.18,
+      "admitted_rps": 1425.61,
+      "enqueue_ms": [
+        8.696,
+        18.804,
+        27.024
+      ],
+      "e2e_ms": [
+        531.811,
+        700.028,
+        736.324
+      ],
+      "completion_rps": 955.82,
+      "drain_s": 0.695,
+      "samples": [
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 315.32124432600017,
+          "relay_handler_duration_seconds_count": 22854.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 257.17292225100044,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 40949.0,
+          "relay_jobs_completed_total": 22854.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 0.206
+        },
+        {
+          "relay_active_handlers": 10.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 319.7317307799999,
+          "relay_handler_duration_seconds_count": 23595.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 270.288487828001,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 42447.0,
+          "relay_jobs_completed_total": 23594.0,
+          "relay_queue_depth{state=\"queued\"}": 645.0,
+          "lock_waiters": 0,
+          "elapsed_s": 1.467
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 324.97622628300013,
+          "relay_handler_duration_seconds_count": 24854.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 276.4619781290009,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 43149.0,
+          "relay_jobs_completed_total": 24854.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.626
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 324.97622628300013,
+          "relay_handler_duration_seconds_count": 24854.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 276.4619781290009,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 43149.0,
+          "relay_jobs_completed_total": 24854.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.775
+        }
+      ],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "147.83%",
+          "MemUsage": "157.3MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-1",
+          "CPUPerc": "20.71%",
+          "MemUsage": "15.24MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-2",
+          "CPUPerc": "20.78%",
+          "MemUsage": "15.65MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-3",
+          "CPUPerc": "22.96%",
+          "MemUsage": "16.71MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-4",
+          "CPUPerc": "20.59%",
+          "MemUsage": "12.98MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.799,
+      "http_rejections": 0
+    },
+    {
+      "matched": 2000,
+      "unexpected_ids": 0,
+      "accepted": 2000,
+      "ledger_sha256": "365578e46802ec526e92c9e3c1a5ecc69dab1a6a9e3ba501757922100fc6579d",
+      "succeeded": 2000,
+      "dead": 0,
+      "attempts": 2000,
+      "extra_attempts": 0,
+      "expired": 0,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "receiver_effects": 2000,
+      "mode": "webhook",
+      "replicas": 4,
+      "repeat": 2,
+      "expected": 2000,
+      "load_jobs": 2000,
+      "errors": 0,
+      "replays": 200,
+      "elapsed_s": 2.79,
+      "deadline_s": 300,
+      "http_requests": 2200,
+      "http_span_s": 1.432,
+      "request_rps": 1535.84,
+      "admitted_rps": 1396.22,
+      "enqueue_ms": [
+        8.938,
+        19.494,
+        28.902
+      ],
+      "e2e_ms": [
+        552.178,
+        823.114,
+        876.091
+      ],
+      "completion_rps": 862.01,
+      "drain_s": 0.891,
+      "samples": [
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 325.52651645100013,
+          "relay_handler_duration_seconds_count": 24918.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 276.99741033600094,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 43220.0,
+          "relay_jobs_completed_total": 24918.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 0.232
+        },
+        {
+          "relay_active_handlers": 4.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 329.8845285430002,
+          "relay_handler_duration_seconds_count": 25567.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 289.9479618000013,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 44599.0,
+          "relay_jobs_completed_total": 25562.0,
+          "relay_queue_depth{state=\"queued\"}": 617.0,
+          "lock_waiters": 1,
+          "elapsed_s": 1.452
+        },
+        {
+          "relay_active_handlers": 3.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 335.29449442200007,
+          "relay_handler_duration_seconds_count": 26822.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 296.68246285400136,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 45420.0,
+          "relay_jobs_completed_total": 26818.0,
+          "relay_queue_depth{state=\"queued\"}": 118.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.669
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 335.696497047,
+          "relay_handler_duration_seconds_count": 26918.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 296.68246285400136,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 45420.0,
+          "relay_jobs_completed_total": 26918.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.79
+        }
+      ],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "141.78%",
+          "MemUsage": "160.3MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-1",
+          "CPUPerc": "29.42%",
+          "MemUsage": "15.48MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-2",
+          "CPUPerc": "30.13%",
+          "MemUsage": "15.46MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-3",
+          "CPUPerc": "29.40%",
+          "MemUsage": "16.15MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-4",
+          "CPUPerc": "29.12%",
+          "MemUsage": "13.61MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.748,
+      "http_rejections": 0
+    },
+    {
+      "matched": 2000,
+      "unexpected_ids": 0,
+      "accepted": 2000,
+      "ledger_sha256": "6a4181e0a176482fb7b8f4119cfc7b91a0f493a7d90f2039f400f571f354e0a2",
+      "succeeded": 2000,
+      "dead": 0,
+      "attempts": 2000,
+      "extra_attempts": 0,
+      "expired": 0,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "receiver_effects": 2000,
+      "mode": "webhook",
+      "replicas": 4,
+      "repeat": 3,
+      "expected": 2000,
+      "load_jobs": 2000,
+      "errors": 0,
+      "replays": 200,
+      "elapsed_s": 2.765,
+      "deadline_s": 300,
+      "http_requests": 2200,
+      "http_span_s": 1.435,
+      "request_rps": 1533.63,
+      "admitted_rps": 1394.21,
+      "enqueue_ms": [
+        8.825,
+        18.237,
+        31.577
+      ],
+      "e2e_ms": [
+        614.308,
+        766.818,
+        803.521
+      ],
+      "completion_rps": 934.72,
+      "drain_s": 0.708,
+      "samples": [
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 336.1203603419999,
+          "relay_handler_duration_seconds_count": 26982.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 297.1925609040013,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 45491.0,
+          "relay_jobs_completed_total": 26982.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 0.193
+        },
+        {
+          "relay_active_handlers": 6.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 340.9291850610001,
+          "relay_handler_duration_seconds_count": 27752.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 309.963162704001,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 47037.0,
+          "relay_jobs_completed_total": 27745.0,
+          "relay_queue_depth{state=\"queued\"}": 648.0,
+          "lock_waiters": 1,
+          "elapsed_s": 1.402
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 346.25956013000007,
+          "relay_handler_duration_seconds_count": 28982.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 316.66042133900055,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 47691.0,
+          "relay_jobs_completed_total": 28982.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.548
+        },
+        {
+          "relay_active_handlers": 0.0,
+          "relay_expired_attempts_recovered_total": 0.0,
+          "relay_failed_attempts_total": 0.0,
+          "relay_handler_duration_seconds_sum": 346.25956013000007,
+          "relay_handler_duration_seconds_count": 28982.0,
+          "relay_http_request_duration_seconds_sum{route=\"POST /v1/jobs\"}": 316.66042133900055,
+          "relay_http_request_duration_seconds_count{route=\"POST /v1/jobs\"}": 47691.0,
+          "relay_jobs_completed_total": 28982.0,
+          "relay_queue_depth{state=\"queued\"}": 0.0,
+          "lock_waiters": 0,
+          "elapsed_s": 2.765
+        }
+      ],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "158.82%",
+          "MemUsage": "162.8MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-1",
+          "CPUPerc": "30.06%",
+          "MemUsage": "16.2MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-2",
+          "CPUPerc": "28.14%",
+          "MemUsage": "15.96MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-3",
+          "CPUPerc": "30.08%",
+          "MemUsage": "16.79MiB / 7.748GiB"
+        },
+        {
+          "Name": "relay-bench-340e6550ddb0-worker-4",
+          "CPUPerc": "27.50%",
+          "MemUsage": "13.55MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.654,
+      "http_rejections": 0
+    },
+    {
+      "matched": 10003,
+      "unexpected_ids": 0,
+      "accepted": 10003,
+      "ledger_sha256": "5e72dff64744d57d45e04f2a53df6b12b84e35e288d3c37a8af6197d20f4b265",
+      "succeeded": 10002,
+      "dead": 1,
+      "attempts": 10016,
+      "extra_attempts": 13,
+      "expired": 13,
+      "overlapping_attempts": 0,
+      "invalid_history": 0,
+      "graceful_history": [
+        "succeeded"
+      ],
+      "webhook_history": [
+        "expired",
+        "succeeded"
+      ],
+      "accepted_deliveries": 2,
+      "receiver_effects": 1,
+      "mode": "chaos",
+      "replicas": 4,
+      "repeat": 1,
+      "expected": 10003,
+      "load_jobs": 10000,
+      "errors": 0,
+      "replays": 1000,
+      "elapsed_s": 15.065,
+      "deadline_s": 300,
+      "http_requests": 11000,
+      "http_span_s": 2.582,
+      "request_rps": 4260.75,
+      "admitted_rps": 3873.41,
+      "enqueue_ms": [
+        3.272,
+        6.007,
+        9.344
+      ],
+      "e2e_ms": [
+        7947.54,
+        8291.626,
+        8349.2
+      ],
+      "completion_rps": 521.13,
+      "drain_s": 11.995,
+      "samples": [],
+      "resources": [
+        {
+          "Name": "relay-bench-340e6550ddb0-db-1",
+          "CPUPerc": "127.46%",
+          "MemUsage": "104.4MiB / 7.748GiB"
+        }
+      ],
+      "warmup_s": 0.663,
+      "http_rejections": 0
+    }
+  ],
+  "relations": "job_attempts|7331840|7282688\njobs|12468224|17268736",
+  "plans": "Limit  (cost=0.28..7.70 rows=1 width=34) (actual time=0.131..0.131 rows=1 loops=1)\n  Buffers: shared hit=97\n  ->  LockRows  (cost=0.28..1328.59 rows=179 width=34) (actual time=0.130..0.130 rows=1 loops=1)\n        Buffers: shared hit=97\n        ->  Index Scan using jobs_priority_idx on jobs  (cost=0.28..1326.80 rows=179 width=34) (actual time=0.128..0.129 rows=1 loops=1)\n              Index Cond: (available_at <= statement_timestamp())\n              Filter: ((attempt_count < max_attempts) AND (state = 'queued'::text))\n              Buffers: shared hit=96\nPlanning:\n  Buffers: shared hit=112\nPlanning Time: 0.206 ms\nExecution Time: 0.146 ms\nHashAggregate  (cost=2325.67..2325.70 rows=3 width=17) (actual time=10.521..10.522 rows=3 loops=1)\n  Group Key: state\n  Batches: 1  Memory Usage: 24kB\n  Buffers: shared hit=1517\n  ->  Seq Scan on jobs  (cost=0.00..2056.11 rows=53911 width=9) (actual time=0.006..5.366 rows=53911 loops=1)\n        Buffers: shared hit=1517\nPlanning:\n  Buffers: shared hit=7\nPlanning Time: 0.033 ms\nExecution Time: 10.539 ms\nInsert on jobs  (cost=0.00..0.02 rows=0 width=0) (actual time=0.139..0.140 rows=0 loops=1)\n  Buffers: shared hit=19\n  ->  Result  (cost=0.00..0.02 rows=1 width=284) (actual time=0.024..0.025 rows=1 loops=1)\nPlanning Time: 0.018 ms\nTrigger for constraint jobs_schedule_id_fkey: time=0.004 calls=1\nExecution Time: 0.157 ms\nInsert on job_attempts  (cost=0.00..5.62 rows=0 width=0) (actual time=0.133..0.134 rows=0 loops=1)\n  Buffers: shared hit=62\n  ->  Subquery Scan on \"*SELECT*\"  (cost=0.00..5.62 rows=1 width=148) (actual time=0.024..0.025 rows=1 loops=1)\n        Buffers: shared hit=5\n        ->  Limit  (cost=0.00..5.61 rows=1 width=68) (actual time=0.023..0.024 rows=1 loops=1)\n              Buffers: shared hit=5\n              ->  Seq Scan on jobs  (cost=0.00..2326.70 rows=415 width=68) (actual time=0.023..0.023 rows=1 loops=1)\n                    Filter: ((kind = 'demo.noop'::text) AND (attempt_count = 0))\n                    Rows Removed by Filter: 126\n                    Buffers: shared hit=5\nPlanning:\n  Buffers: shared hit=7\nPlanning Time: 0.062 ms\nTrigger for constraint job_attempts_job_id_fkey: time=0.088 calls=1\nExecution Time: 0.229 ms"
+}

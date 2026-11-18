@@ -1,2 +1,4 @@
 .env
 /bin/
+/benchmarks/local.json
+/benchmarks/__pycache__/

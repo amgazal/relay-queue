@@ -1,0 +1,9 @@
+services:
+  api:
+    environment:
+      RELAY_API_METRICS_ADDR: 0.0.0.0:9091
+    ports: ["127.0.0.1::9091"]
+  worker:
+    environment:
+      RELAY_WORKER_METRICS_ADDR: 0.0.0.0:9092
+    ports: ["127.0.0.1::9092"]
