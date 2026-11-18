@@ -1,17 +1,13 @@
 package queue
 
 import (
-	"context"
 	"errors"
 	"fmt"
-	"os"
-	"path/filepath"
 	"sync"
 	"testing"
 	"time"
 
-	"github.com/jackc/pgx/v5"
-	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/amgazal/relay-queue/internal/testdb"
 )
 
 func TestRetryDelay(t *testing.T) {
@@ -28,40 +24,7 @@ func TestRetryDelay(t *testing.T) {
 	}
 }
 
-func database(t *testing.T) *Queue {
-	t.Helper()
-	url := os.Getenv("RELAY_TEST_DATABASE_URL")
-	if url == "" {
-		t.Skip("set RELAY_TEST_DATABASE_URL to run PostgreSQL integration tests")
-	}
-	ctx := context.Background()
-	admin, err := pgxpool.New(ctx, url)
-	check(t, err)
-	t.Cleanup(admin.Close)
-	schema := pgx.Identifier{fmt.Sprintf("relay_test_%d", time.Now().UnixNano())}.Sanitize()
-	_, err = admin.Exec(ctx, "CREATE SCHEMA "+schema)
-	check(t, err)
-	t.Cleanup(func() {
-		_, err := admin.Exec(ctx, "DROP SCHEMA "+schema+" CASCADE")
-		if err != nil {
-			t.Error(err)
-		}
-	})
-	config := admin.Config()
-	config.ConnConfig.RuntimeParams["search_path"] = schema
-	pool, err := pgxpool.NewWithConfig(ctx, config)
-	check(t, err)
-	t.Cleanup(pool.Close)
-	files, err := filepath.Glob("../../migrations/*.sql")
-	check(t, err)
-	for _, file := range files {
-		sql, err := os.ReadFile(file)
-		check(t, err)
-		_, err = pool.Exec(ctx, string(sql))
-		check(t, err)
-	}
-	return New(pool)
-}
+func database(t *testing.T) *Queue { return New(testdb.Open(t)) }
 
 func check(t *testing.T, err error) {
 	t.Helper()

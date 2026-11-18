@@ -1,6 +1,6 @@
 # Relay
 
-Relay is a Go background job queue backed by PostgreSQL 17. Phase 1 implements the durable queue engine in `internal/queue` using pgx/v5 and a shared connection pool. Both commands currently print a startup message and exit.
+Relay is a Go background job queue backed by PostgreSQL 17. The worker executable runs the PostgreSQL queue engine with bounded concurrency, lease renewal, retries, and crash recovery. The API executable is a placeholder.
 
 ## Local development
 
@@ -12,6 +12,7 @@ make migrate
 make test-schema
 make build test vet
 ./bin/relay-api
+export RELAY_DATABASE_URL=postgres://relay:relay_local@localhost:5432/relay
 ./bin/relay-worker
 ```
 
@@ -57,4 +58,46 @@ RELAY_TEST_DATABASE_URL=postgres://relay:relay_local@localhost:5432/relay go tes
 
 Each integration test creates its own schema, applies the versioned SQL files, and removes that schema on cleanup. The database user needs schema creation privileges. Without the connection string, Go skips these database tests. Tests force expiration and retry eligibility through database timestamps so they can exercise recovery without sleeping.
 
-The API, worker pool, webhook delivery, and background reaper loop are future phases. Applications using the package must call recovery periodically for abandoned jobs to progress.
+## Running workers
+
+Start a second process by running the same binary in another terminal with the same database URL. Migrate the database before startup. The worker reads the process environment. Compose loads its database settings from `.env`.
+
+| Environment variable | Default | Meaning |
+| --- | --- | --- |
+| `RELAY_DATABASE_URL` | Required | PostgreSQL URL for the migrated Relay database |
+| `RELAY_WORKER_ID` | Random per process | Identity recorded in attempt history and structured logs |
+| `RELAY_CONCURRENCY` | 4 | Maximum simultaneous handlers per process |
+| `RELAY_LEASE` | 30s | Lease length. Renewal interval is one third of this value. |
+| `RELAY_POLL_INTERVAL` | 250ms | Per-slot wait after an empty claim or database error |
+| `RELAY_REAP_INTERVAL` | 5s | Time between scans for expired attempts |
+| `RELAY_HANDLER_TIMEOUT` | 1m | Maximum time before the handler context is cancelled |
+| `RELAY_SHUTDOWN_GRACE` | 20s | Time given to active jobs after SIGINT or SIGTERM |
+
+Each slot claims one job and calls its handler directly. A slot stays occupied until that handler returns. A running job has one heartbeat goroutine. Before dispatch, the worker confirms ownership. A failed renewal cancels the handler context and leaves the attempt for recovery. A failed final database write is logged and the worker leaves PostgreSQL to determine the outcome. A timeout, panic, handler error, or unknown job type consumes an attempt under the queue's retry policy.
+
+On shutdown, polling and recovery stop. Existing handlers can finish and renew leases during the grace period. When grace expires, the worker cancels remaining work and exits. Cancellation is cooperative. Go cannot interrupt an arbitrary handler or undo an external request. A handler ignoring a timeout can occupy its slot until it returns or the process exits; heartbeats stop on timeout. Make external effects idempotent because a later attempt can overlap or repeat an earlier effect.
+
+Every worker scans for expired leases at startup and periodically thereafter, recovering up to its concurrency limit per scan. A replacement process can recover work left by a crashed process. Multiple reapers use the queue's row locking and can run together.
+
+### Try a job
+
+With a worker running, execute the following against the default local Compose database. The long-running handler accepts a Go duration, observes cancellation, and can be used to see heartbeats. The failing handler below reaches the dead state after two attempts.
+
+```sh
+docker compose exec -T db psql -U relay -d relay <<'SQL'
+INSERT INTO jobs (kind, payload, max_attempts) VALUES
+  ('demo.sleep', '{}', 1),
+  ('demo.wait', '{"duration":"12s"}', 2),
+  ('demo.fail', '{}', 2);
+SQL
+docker compose exec db psql -U relay -d relay -c 'SELECT kind,state,attempt_count,lease_expires_at FROM jobs ORDER BY created_at DESC LIMIT 10'
+```
+
+For the automated 1,000-job demonstration, set the test URL and run:
+
+```sh
+export RELAY_TEST_DATABASE_URL=postgres://relay:relay_local@localhost:5432/relay
+go test -race -count=1 -v ./internal/worker -run '^TestTwoWorkers1000$'
+```
+
+The demo starts two independent worker instances with separate connection pools and three execution slots each. It checks terminal states and claim history in PostgreSQL and counts handler invocations separately. Run the full test command above to exercise retries, heartbeat loss, graceful draining, and forced abandonment.
