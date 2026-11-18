@@ -4,7 +4,7 @@
 
 In the local 10,000-job failure workload, Relay accounted for all **10,003 accepted jobs**, including three control jobs. **10,002 succeeded and one intentionally reached dead**. After SIGKILL, PostgreSQL recorded 13 expired attempts. The signed webhook was accepted twice and produced one durable receiver effect.
 
-In three 2,000-job no-op bursts per worker count, median completion throughput rose from **947 jobs/s with one process to 1,346 jobs/s with eight**. The largest improvement was in queue wait: median run p95 end-to-end latency fell from **1,271 ms to 40 ms**. The eight-worker runs were close to the producer's admission rate. These are short, local, warm-system results. The [machine-readable report](../benchmarks/results.json) includes 22 verified runs, sampled metrics and execution plans.
+In three 2,000-job no-op bursts per worker count, median completion throughput rose from **947 jobs/s with one process to 1,346 jobs/s with eight**. Median run p95 end-to-end latency, which includes queue wait, fell from **1,271 ms to 40 ms**. The eight-worker runs were close to the producer's admission rate. These are short, local, warm-system results. The [machine-readable report](../benchmarks/results.json) includes 22 verified runs, sampled metrics and execution plans.
 
 ## Environment and configuration
 
@@ -14,7 +14,7 @@ Each worker had four slots, an eight-second lease, a 20 ms idle poll, a 500 ms r
 
 ## Results
 
-The following values are medians across three trials per row. Percentiles are calculated within each trial before taking the median; they are not pooled observations. HTTP rates include one idempotent replay per ten newly admitted jobs. Each trial admitted 2,000 and handled 2,200 requests, with zero unexpected responses or 429 rejections.
+The following values are medians across three trials per row. Percentiles are calculated within each trial before taking the median; they are not pooled observations. HTTP rates include one idempotent replay per ten newly admitted jobs. Each performance trial in these tables admitted 2,000 and handled 2,200 requests, with zero unexpected responses or 429 rejections.
 
 | Workload, 4 workers | HTTP req/s | New jobs/s | Completed/s | Enqueue p50 / p95 / p99 (ms) | End-to-end p50 / p95 / p99 (ms) | Drain (s) |
 | --- | ---: | ---: | ---: | --- | --- | ---: |

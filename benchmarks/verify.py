@@ -9,6 +9,11 @@ def require(condition, message):
 
 
 def verify(r):
+    controls = 3 if r["mode"] == "chaos" else 0
+    require(r["load_jobs"] > 0 and r["expected"] == r["load_jobs"] + controls,
+            "accepted ledger does not cover the submitted workload")
+    require(r["http_requests"] == r["load_jobs"] + r["replays"] and r["http_rejections"] == 0,
+            "HTTP counts do not reconcile with admissions and replays")
     require(r["expected"] == r["accepted"] == r["matched"] == r["succeeded"] + r["dead"],
             "accepted IDs and terminal jobs differ")
     require(r["unexpected_ids"] == r["invalid_history"] == r["overlapping_attempts"] == 0,

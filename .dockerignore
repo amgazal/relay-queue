@@ -6,3 +6,8 @@
 !internal/
 !internal/**
 **/*_test.go
+**/.env
+**/.env.*
+**/*.pem
+**/*.key
+**/*.dump

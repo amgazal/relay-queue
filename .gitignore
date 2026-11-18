@@ -2,3 +2,8 @@
 /bin/
 /benchmarks/local.json
 /benchmarks/__pycache__/
+.env.*
+!.env.example
+*.pem
+*.key
+*.dump

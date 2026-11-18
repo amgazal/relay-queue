@@ -1,6 +1,6 @@
 # Relay HTTP API
 
-The local base URL is `http://127.0.0.1:8080`. Supply `Authorization: Bearer <key>` on all `/v1` requests. Configure a high-entropy key through `RELAY_API_KEY`. All holders have full access to all jobs. Use TLS when crossing a network boundary. Responses include a server-generated `X-Request-ID`. Logs include the route pattern, method, status, duration and request ID.
+The local base URL is `http://127.0.0.1:8080`. Supply `Authorization: Bearer <key>` on all `/v1` requests. Configure a high-entropy key through `RELAY_API_KEY`. All holders have full access to all jobs. Use TLS when crossing a network boundary. Responses include a server-generated `X-Request-ID`. Request logs include the registered route pattern, status, duration and request ID. Normal requests log at debug level.
 
 ## Submit a job
 

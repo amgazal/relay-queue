@@ -4,7 +4,7 @@ Each API and worker process owns a Prometheus registry. Scrape every process who
 
 ## Start and scrape
 
-After the README's database setup, export the usual database URL and API key. Run these commands in separate terminals sharing that environment:
+For host-built executables, run `make migrate build`, export RELAY_DATABASE_URL and RELAY_API_KEY, and start each process in a separate terminal sharing that environment. For containers, use the [deployment metrics instructions](DEPLOYMENT.md#monitoring).
 
 ```sh
 RELAY_API_METRICS_ADDR=127.0.0.1:9091 ./bin/relay-api

@@ -30,5 +30,9 @@ jobs:
           go vet ./...
           go build ./...
           go test -count=1 -race ./...
+      - name: Verify saved benchmark evidence
+        run: |
+          python3 -m unittest discover -s benchmarks -p 'test_*.py'
+          make bench-verify
       - name: Build and exercise container images
         run: python3 tests/compose_smoke.py
