@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/amgazal/relay-queue/internal/metrics"
 	"log/slog"
 	"os"
 	"os/signal"
@@ -82,20 +83,26 @@ func run(ctx context.Context, log *slog.Logger) error {
 		return errors.New("invalid RELAY_DATABASE_URL")
 	}
 	defer pool.Close()
-	w, err := worker.New(queue.New(pool), cfg, demos(), log)
+	m := metrics.New(nil)
+	w, err := worker.New(queue.WithMetrics(pool, m), cfg, demos(), log)
 	if err != nil {
 		return err
 	}
 	if err = pool.Ping(ctx); err != nil {
-		return fmt.Errorf("connect to PostgreSQL: %w", err)
+		return errors.New("PostgreSQL connection failed")
 	}
+	closeMetrics, err := m.Listen(os.Getenv("RELAY_WORKER_METRICS_ADDR"), log)
+	if err != nil {
+		return err
+	}
+	defer closeMetrics()
 	w.Run(ctx)
 	return nil
 }
 func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
-	log := slog.New(slog.NewJSONHandler(os.Stderr, nil))
+	log := slog.New(slog.NewJSONHandler(os.Stderr, nil)).With("component", "worker")
 	if err := run(ctx, log); err != nil && ctx.Err() == nil {
 		log.Error("worker startup failed", "error", err)
 		os.Exit(1)

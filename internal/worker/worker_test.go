@@ -134,7 +134,11 @@ func TestAbandonment(t *testing.T) {
 		t.Run(fmt.Sprint("forced-", forced), func(t *testing.T) {
 			p := testdb.Open(t)
 			c := settings("old")
-			c.Grace = 150 * time.Millisecond
+			if forced {
+				c.Grace = 150 * time.Millisecond
+			} else {
+				c.Grace = 30 * time.Second
+			}
 			c.Reap = time.Hour
 			id := enqueue(t, p, "wait", 2, "null")
 			entered, cancelled := make(chan struct{}), make(chan struct{})
@@ -157,12 +161,13 @@ func TestAbandonment(t *testing.T) {
 				await(t, cancelled)
 				expire()
 			} else {
+				// Drain claims before expiring the active lease so only the replacement can retry.
+				stop()
 				expire()
 				await(t, cancelled)
-				stop()
 				await(t, done)
 			}
-			eventually(t, p, "SELECT state='running' AND completed_at IS NULL FROM jobs WHERE id=$1", id)
+			eventually(t, p, "SELECT state IN ('running','queued') AND attempt_count=1 AND completed_at IS NULL FROM jobs WHERE id=$1", id)
 			start(t, p, settings("replacement"), Registry{"wait": func(context.Context, json.RawMessage) error { return nil }})
 			eventually(t, p, "SELECT state='succeeded' AND attempt_count=2 FROM jobs WHERE id=$1", id)
 			eventually(t, p, "SELECT array_agg(outcome ORDER BY attempt_number)=ARRAY['expired','succeeded'] FROM job_attempts WHERE job_id=$1", id)

@@ -40,7 +40,7 @@ func New(q *queue.Queue, c Config, handlers Registry, log *slog.Logger) (*Worker
 			return nil, fmt.Errorf("invalid handler registration %q", kind)
 		}
 	}
-	return &Worker{q, c, maps.Clone(handlers), log.With("worker", c.ID)}, nil
+	return &Worker{q, c, maps.Clone(handlers), log.With("worker_id", c.ID)}, nil
 }
 
 func (w *Worker) Run(ctx context.Context) {
@@ -76,7 +76,7 @@ func (w *Worker) slot(poll, active context.Context) {
 			continue
 		}
 		if err != nil {
-			w.log.Error("claim failed", "error", err)
+			w.log.Error("claim failed", "error_category", "database")
 		}
 		select {
 		case <-poll.Done():
@@ -92,7 +92,7 @@ func (w *Worker) recoverExpired(ctx context.Context) {
 	for ctx.Err() == nil {
 		n, err := w.q.ReapExpired(ctx, w.cfg.Concurrency)
 		if err != nil && ctx.Err() == nil {
-			w.log.Error("recovery failed", "error", err)
+			w.log.Error("recovery failed", "error_category", "database")
 		} else if n > 0 {
 			w.log.Info("expired leases recovered", "count", n)
 		}
@@ -118,7 +118,7 @@ func invoke(ctx context.Context, handlers Registry, job queue.Job) (err error) {
 }
 
 func (w *Worker) execute(active context.Context, c queue.Claim) {
-	log := w.log.With("job", c.Job.ID, "attempt", c.Job.AttemptCount, "kind", c.Job.Kind)
+	log := w.log.With("job_id", c.Job.ID, "attempt", c.Job.AttemptCount, "job_type", c.Job.Kind)
 	// Reconfirm ownership before dispatch in case the claim response was delayed.
 	renew := func(ctx context.Context) error {
 		call, cancel := context.WithTimeout(ctx, w.cfg.Lease/3)
@@ -127,11 +127,13 @@ func (w *Worker) execute(active context.Context, c queue.Claim) {
 		return err
 	}
 	if err := renew(active); err != nil {
-		log.Warn("cannot confirm lease", "error", err)
+		log.Warn("cannot confirm lease", "error_category", "lease")
 		return
 	}
 	run, cancel := context.WithTimeout(active, w.cfg.Timeout)
 	defer cancel()
+	m := w.q.Metrics
+	timedOut := sync.OnceFunc(func() { m.Timeouts.Inc() })
 	finished := make(chan struct{})
 	renewed := make(chan error, 1)
 	go func() {
@@ -143,6 +145,9 @@ func (w *Worker) execute(active context.Context, c queue.Claim) {
 				renewed <- nil
 				return
 			case <-run.Done():
+				if errors.Is(run.Err(), context.DeadlineExceeded) {
+					timedOut()
+				}
 				renewed <- nil
 				return
 			case <-ticker.C:
@@ -155,10 +160,15 @@ func (w *Worker) execute(active context.Context, c queue.Claim) {
 		}
 	}()
 	log.Debug("handler started")
+	m.Attempts.Inc()
+	m.Active.Inc()
+	start := time.Now()
 	err := invoke(run, w.handlers, c.Job)
+	m.Active.Dec()
+	m.HandlerTime.Observe(time.Since(start).Seconds())
 	close(finished)
 	if lost := <-renewed; lost != nil {
-		log.Warn("lease renewal failed; abandoning attempt", "error", lost)
+		log.Warn("lease renewal failed; abandoning attempt", "error_category", "lease")
 		return
 	}
 	if active.Err() != nil {
@@ -166,19 +176,22 @@ func (w *Worker) execute(active context.Context, c queue.Claim) {
 	}
 	if run.Err() != nil {
 		err = run.Err()
+		if errors.Is(err, context.DeadlineExceeded) {
+			timedOut()
+		}
 	}
 	final, stop := context.WithTimeout(active, w.cfg.Lease/3)
 	defer stop()
 	if err != nil {
 		if dbErr := w.q.Fail(final, c.Ownership, err.Error()); dbErr != nil {
-			log.Warn("failure could not be recorded", "error", dbErr)
+			log.Warn("failure could not be recorded", "error_category", "finalization")
 			return
 		}
-		log.Warn("handler failed", "error", err)
+		log.Warn("handler failed", "error_category", "handler")
 		return
 	}
 	if err = w.q.Complete(final, c.Ownership); err != nil {
-		log.Warn("completion could not be recorded", "error", err)
+		log.Warn("completion could not be recorded", "error_category", "finalization")
 		return
 	}
 	log.Debug("job completed")

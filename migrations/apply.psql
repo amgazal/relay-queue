@@ -16,4 +16,14 @@ SELECT NOT EXISTS (SELECT FROM schema_migrations WHERE version = 2) AS apply_v2 
     \ir 002_queue.sql
     INSERT INTO schema_migrations (version) VALUES (2);
 \endif
+SELECT NOT EXISTS (SELECT FROM schema_migrations WHERE version = 3) AS apply_v3 \gset
+\if :apply_v3
+    \ir 003_api.sql
+    INSERT INTO schema_migrations (version) VALUES (3);
+\endif
+SELECT NOT EXISTS (SELECT FROM schema_migrations WHERE version = 4) AS apply_v4 \gset
+\if :apply_v4
+    \ir 004_schedules.sql
+    INSERT INTO schema_migrations (version) VALUES (4);
+\endif
 COMMIT;

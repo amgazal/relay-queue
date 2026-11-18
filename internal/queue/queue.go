@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/amgazal/relay-queue/internal/metrics"
 	"math"
 	"math/rand/v2"
 	"strings"
@@ -26,9 +27,14 @@ const (
 	ErrLeaseLost Error = "claim is no longer valid"
 )
 
-type Queue struct{ pool *pgxpool.Pool }
+type Queue struct {
+	pool    *pgxpool.Pool
+	Metrics *metrics.Metrics
+}
 
-func New(pool *pgxpool.Pool) *Queue { return &Queue{pool} }
+func New(pool *pgxpool.Pool) *Queue { return WithMetrics(pool, metrics.New(nil)) }
+
+func WithMetrics(pool *pgxpool.Pool, m *metrics.Metrics) *Queue { return &Queue{pool, m} }
 
 type Submission struct {
 	Kind           string
@@ -60,36 +66,70 @@ func (j *Job) columns() []any {
 }
 
 func (q *Queue) Enqueue(ctx context.Context, s Submission) (Job, error) {
+	j, _, err := q.Submit(ctx, s, 0, 0)
+	return j, err
+}
+
+// Submit adds relative scheduling and optional active-job admission control.
+func (q *Queue) Submit(ctx context.Context, s Submission, delay int32, limit int) (Job, bool, error) {
+	var j Job
+	var created bool
+	err := pgx.BeginTxFunc(ctx, q.pool, pgx.TxOptions{IsoLevel: pgx.ReadCommitted}, func(tx pgx.Tx) error {
+		var err error
+		j, created, err = SubmitTx(ctx, tx, s, delay, limit)
+		return err
+	})
+	if errors.Is(err, ErrConflict) {
+		q.Metrics.Conflicts.Inc()
+	}
+	if err != nil {
+		return Job{}, false, err
+	}
+	if created {
+		q.Metrics.Submitted.Inc()
+	}
+	return j, created, nil
+}
+
+// SubmitTx submits within the caller's READ COMMITTED transaction. Roll back on error.
+func SubmitTx(ctx context.Context, tx pgx.Tx, s Submission, delay int32, limit int) (Job, bool, error) {
+	if delay < 0 || limit < 0 || (s.ScheduledAt != nil && delay != 0) {
+		return Job{}, false, ErrInvalid
+	}
+
 	if strings.TrimSpace(s.Kind) == "" || !json.Valid(s.Payload) || s.MaxAttempts < 0 || (s.IdempotencyKey != nil && strings.TrimSpace(*s.IdempotencyKey) == "") {
-		return Job{}, ErrInvalid
+		return Job{}, false, ErrInvalid
 	}
 	if s.MaxAttempts == 0 {
 		s.MaxAttempts = 5
 	}
 	var j Job
-	err := pgx.BeginTxFunc(ctx, q.pool, pgx.TxOptions{IsoLevel: pgx.ReadCommitted}, func(tx pgx.Tx) error {
-		args := []any{s.Kind, s.Payload, s.Priority, s.ScheduledAt, s.MaxAttempts, s.IdempotencyKey}
-		err := tx.QueryRow(ctx, `INSERT INTO jobs AS j(kind,payload,priority,requested_at,available_at,max_attempts,idempotency_key)
- VALUES($1,$2,$3,$4,coalesce($4,now()),$5,$6) ON CONFLICT(idempotency_key) DO NOTHING RETURNING `+fields, args...).Scan(j.columns()...)
-		if !errors.Is(err, pgx.ErrNoRows) {
-			return err
-		}
-		// A fresh READ COMMITTED snapshot sees the winning insert after a concurrent conflict.
-		var same bool
-		err = tx.QueryRow(ctx, `SELECT `+fields+`,kind=$1 AND payload=$2 AND priority=$3 AND requested_at IS NOT DISTINCT FROM $4 AND max_attempts=$5
- FROM jobs j WHERE idempotency_key=$6`, args...).Scan(append(j.columns(), &same)...)
-		if err == nil && !same {
-			return ErrConflict
-		}
-		return err
-	})
-	if err != nil {
-		return Job{}, err
+
+	if err := admissionLock(ctx, tx, limit); err != nil {
+		return Job{}, false, err
 	}
-	return j, nil
+	args := []any{s.Kind, s.Payload, s.Priority, s.ScheduledAt, s.MaxAttempts, s.IdempotencyKey, delay}
+	err := tx.QueryRow(ctx, `INSERT INTO jobs AS j(kind,payload,priority,requested_at,available_at,max_attempts,idempotency_key,delay_seconds)
+ VALUES($1,$2,$3,$4,coalesce($4,now()+$7::integer * interval '1 second'),$5,$6,$7) ON CONFLICT(idempotency_key) DO NOTHING RETURNING `+fields, args...).Scan(j.columns()...)
+	if err == nil {
+		return j, true, checkCapacity(ctx, tx, limit)
+	}
+	if !errors.Is(err, pgx.ErrNoRows) {
+		return Job{}, false, err
+	}
+	// A fresh READ COMMITTED snapshot sees the winning insert after a concurrent conflict.
+	var same bool
+	err = tx.QueryRow(ctx, `SELECT `+fields+`,kind=$1 AND payload=$2 AND priority=$3 AND requested_at IS NOT DISTINCT FROM $4 AND coalesce(original_max_attempts,max_attempts)=$5 AND delay_seconds=$7
+ FROM jobs j WHERE idempotency_key=$6`, args...).Scan(append(j.columns(), &same)...)
+	if err == nil && !same {
+		return Job{}, false, ErrConflict
+	}
+	return j, false, err
 }
 
 func (q *Queue) Claim(ctx context.Context, worker string, limit int, lease time.Duration) ([]Claim, error) {
+	start := time.Now()
+	defer func() { q.Metrics.ClaimTime.Observe(time.Since(start).Seconds()) }()
 	if strings.TrimSpace(worker) == "" || limit < 1 || lease.Microseconds() < 1 {
 		return nil, ErrInvalid
 	}
@@ -151,14 +191,32 @@ func (q *Queue) Heartbeat(ctx context.Context, o Ownership, lease time.Duration)
 	err := q.owned(ctx, o, func(tx pgx.Tx, _, _ int32) error {
 		return tx.QueryRow(ctx, `UPDATE jobs SET lease_expires_at=greatest(lease_expires_at,clock_timestamp()+$2::bigint * interval '1 microsecond'),updated_at=clock_timestamp() WHERE id=$1 RETURNING lease_expires_at`, o.JobID, lease.Microseconds()).Scan(&deadline)
 	})
+	if err != nil {
+		q.Metrics.RenewFailures.Inc()
+	}
 	return deadline, err
 }
 
 func (q *Queue) Complete(ctx context.Context, o Ownership) error {
-	return q.owned(ctx, o, func(tx pgx.Tx, n, max int32) error { return finish(ctx, tx, o, n, max, "succeeded", nil) })
+	err := q.owned(ctx, o, func(tx pgx.Tx, n, max int32) error { return finish(ctx, tx, o, n, max, "succeeded", nil) })
+	if err == nil {
+		q.Metrics.Completed.Inc()
+	}
+	return err
 }
 func (q *Queue) Fail(ctx context.Context, o Ownership, message string) error {
-	return q.owned(ctx, o, func(tx pgx.Tx, n, max int32) error { return finish(ctx, tx, o, n, max, "failed", &message) })
+	retry := false
+	err := q.owned(ctx, o, func(tx pgx.Tx, n, max int32) error {
+		retry = n < max
+		return finish(ctx, tx, o, n, max, "failed", &message)
+	})
+	if err == nil {
+		q.Metrics.Failed.Inc()
+		if retry {
+			q.Metrics.Retries.WithLabelValues("failure").Inc()
+		}
+	}
+	return err
 }
 
 // Equal jitter chooses between half and all of a capped exponential delay.
@@ -199,7 +257,7 @@ func (q *Queue) ReapExpired(ctx context.Context, limit int) (int, error) {
 		o      Ownership
 		n, max int32
 	}
-	count := 0
+	count, retries := 0, 0
 	err := pgx.BeginFunc(ctx, q.pool, func(tx pgx.Tx) error {
 		rows, err := tx.Query(ctx, `SELECT id::text,lease_owner,lock_token::text,attempt_count,max_attempts FROM jobs
  WHERE state='running' AND lease_expires_at<=statement_timestamp() ORDER BY lease_expires_at,id LIMIT $1 FOR UPDATE SKIP LOCKED`, limit)
@@ -215,6 +273,9 @@ func (q *Queue) ReapExpired(ctx context.Context, limit int) (int, error) {
 			return err
 		}
 		for _, e := range batch {
+			if e.n < e.max {
+				retries++
+			}
 			if err := finish(ctx, tx, e.o, e.n, e.max, "expired", nil); err != nil {
 				return err
 			}
@@ -224,6 +285,10 @@ func (q *Queue) ReapExpired(ctx context.Context, limit int) (int, error) {
 	})
 	if err != nil {
 		return 0, err
+	}
+	q.Metrics.Recovered.Add(float64(count))
+	if retries > 0 {
+		q.Metrics.Retries.WithLabelValues("expired").Add(float64(retries))
 	}
 	return count, nil
 }
