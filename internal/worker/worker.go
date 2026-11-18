@@ -15,6 +15,9 @@ import (
 	"github.com/amgazal/relay-queue/internal/queue"
 )
 
+// ErrPermanent marks a handler failure that another automatic attempt cannot resolve.
+var ErrPermanent = errors.New("permanent failure")
+
 type Handler func(context.Context, json.RawMessage) error
 type Registry map[string]Handler
 
@@ -183,7 +186,11 @@ func (w *Worker) execute(active context.Context, c queue.Claim) {
 	final, stop := context.WithTimeout(active, w.cfg.Lease/3)
 	defer stop()
 	if err != nil {
-		if dbErr := w.q.Fail(final, c.Ownership, err.Error()); dbErr != nil {
+		fail := w.q.Fail
+		if errors.Is(err, ErrPermanent) {
+			fail = w.q.FailPermanent
+		}
+		if dbErr := fail(final, c.Ownership, err.Error()); dbErr != nil {
 			log.Warn("failure could not be recorded", "error_category", "finalization")
 			return
 		}

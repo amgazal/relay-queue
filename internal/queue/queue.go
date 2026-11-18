@@ -198,17 +198,25 @@ func (q *Queue) Heartbeat(ctx context.Context, o Ownership, lease time.Duration)
 }
 
 func (q *Queue) Complete(ctx context.Context, o Ownership) error {
-	err := q.owned(ctx, o, func(tx pgx.Tx, n, max int32) error { return finish(ctx, tx, o, n, max, "succeeded", nil) })
+	err := q.owned(ctx, o, func(tx pgx.Tx, n, max int32) error { return finish(ctx, tx, o, n, false, "succeeded", nil) })
 	if err == nil {
 		q.Metrics.Completed.Inc()
 	}
 	return err
 }
 func (q *Queue) Fail(ctx context.Context, o Ownership, message string) error {
+	return q.fail(ctx, o, message, true)
+}
+
+func (q *Queue) FailPermanent(ctx context.Context, o Ownership, message string) error {
+	return q.fail(ctx, o, message, false)
+}
+
+func (q *Queue) fail(ctx context.Context, o Ownership, message string, allowRetry bool) error {
 	retry := false
 	err := q.owned(ctx, o, func(tx pgx.Tx, n, max int32) error {
-		retry = n < max
-		return finish(ctx, tx, o, n, max, "failed", &message)
+		retry = allowRetry && n < max
+		return finish(ctx, tx, o, n, retry, "failed", &message)
 	})
 	if err == nil {
 		q.Metrics.Failed.Inc()
@@ -225,7 +233,7 @@ func retryDelay(n int32, sample float64) time.Duration {
 	return ceiling/2 + time.Duration(math.Floor(float64(ceiling/2)*sample))
 }
 
-func finish(ctx context.Context, tx pgx.Tx, o Ownership, n, max int32, outcome string, message *string) error {
+func finish(ctx context.Context, tx pgx.Tx, o Ownership, n int32, retry bool, outcome string, message *string) error {
 	tag, err := tx.Exec(ctx, `UPDATE job_attempts SET outcome=$4,error_message=$5,finished_at=clock_timestamp()
  WHERE job_id=$1 AND attempt_number=$2 AND lock_token=$3 AND outcome='running'`, o.JobID, n, o.Token, outcome, message)
 	if err != nil {
@@ -238,7 +246,7 @@ func finish(ctx context.Context, tx pgx.Tx, o Ownership, n, max int32, outcome s
 	var delay time.Duration
 	if outcome != "succeeded" {
 		state = "dead"
-		if n < max {
+		if retry {
 			state = "queued"
 			delay = retryDelay(n, rand.Float64())
 		}
@@ -276,7 +284,7 @@ func (q *Queue) ReapExpired(ctx context.Context, limit int) (int, error) {
 			if e.n < e.max {
 				retries++
 			}
-			if err := finish(ctx, tx, e.o, e.n, e.max, "expired", nil); err != nil {
+			if err := finish(ctx, tx, e.o, e.n, e.n < e.max, "expired", nil); err != nil {
 				return err
 			}
 		}

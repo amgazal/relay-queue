@@ -2,7 +2,23 @@
 
 Relay is a Go background job queue backed by PostgreSQL 17. The worker executable runs the PostgreSQL queue engine with bounded concurrency, lease renewal, retries, and crash recovery. The authenticated HTTP API submits jobs and exposes their lifecycle.
 
-## Local development
+## Docker quick start
+
+From a fresh clone, install Docker with Compose and generate a local API key. Run these commands in the same shell:
+
+```sh
+cp -n .env.example .env
+export RELAY_API_KEY="$(openssl rand -hex 32)"
+docker compose up --build -d --wait
+curl -fsS http://127.0.0.1:8080/readyz
+curl -fsS -H "Authorization: Bearer $RELAY_API_KEY" -H 'Content-Type: application/json' \
+  -d '{"type":"demo.sleep","payload":{}}' http://127.0.0.1:8080/v1/jobs
+docker compose up -d --scale worker=2
+```
+
+Use `make down` to stop the stack and retain its data. The [deployment guide](docs/DEPLOYMENT.md) covers the migration gate, Docker networking, optional signed webhook demo, CI, and restart tests.
+
+## Local development with host Go
 
 Install Go 1.27.x, Make, and Docker with Compose. Run these commands from the repository root.
 
@@ -151,3 +167,7 @@ Each transaction locks one due schedule with `FOR UPDATE SKIP LOCKED`. Other rep
 ## Observability
 
 The API exposes Prometheus metrics on a separate loopback listener at `http://127.0.0.1:9091/metrics`. Set `RELAY_API_METRICS_ADDR` to select another address or to an empty string to disable it. Worker listeners are opt-in: set `RELAY_WORKER_METRICS_ADDR=127.0.0.1:9092` for one worker and choose a different port for each additional local worker. Counters belong to individual processes. API metrics also include a PostgreSQL snapshot of queue depth and eligible-job age. See the [observability guide](docs/OBSERVABILITY.md) for scrape configuration, PromQL, and troubleshooting.
+
+## Webhook demonstration
+
+Workers accept `webhook.deliver` jobs for operator-configured destinations. Relay signs the JSON event, sends it over HTTP, and records the result using ordinary job attempts. The local receiver records one durable inbox entry per event ID. The [webhook guide](docs/WEBHOOKS.md) includes setup, signing, retry rules, and a crash-and-redelivery demonstration.

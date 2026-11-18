@@ -10,6 +10,9 @@ import (
 )
 
 type Metrics struct {
+	WebhookResults                                                                        *prometheus.CounterVec
+	WebhookDuration                                                                       prometheus.Histogram
+	SignatureFailures                                                                     prometheus.Counter
 	Registry                                                                              *prometheus.Registry
 	Submitted, Conflicts, Attempts, Completed, Failed, RenewFailures, Recovered, Timeouts prometheus.Counter
 	Dispatched, DispatchFailures, Skipped                                                 prometheus.Counter
@@ -33,26 +36,29 @@ func New(pool *pgxpool.Pool) *Metrics {
 		return h
 	}
 	m := &Metrics{Registry: r,
-		Submitted:        counter("jobs_submitted_total", "Newly committed job records."),
-		Conflicts:        counter("submission_conflicts_total", "Conflicting submissions using an existing key."),
-		Attempts:         counter("execution_attempts_total", "Handler dispatches started."),
-		Completed:        counter("jobs_completed_total", "Committed successful completions."),
-		Failed:           counter("failed_attempts_total", "Attempts finalized as failed."),
-		RenewFailures:    counter("lease_renewal_failures_total", "Unsuccessful lease confirmations and renewals."),
-		Recovered:        counter("expired_attempts_recovered_total", "Expired attempts closed by the reaper."),
-		Timeouts:         counter("worker_timeouts_total", "Handler deadlines reached."),
-		Dispatched:       counter("scheduler_occurrences_dispatched_total", "New scheduled jobs committed."),
-		DispatchFailures: counter("scheduler_dispatch_failures_total", "Unsuccessful scheduler operations excluding shutdown cancellation."),
-		Skipped:          counter("scheduler_occurrences_skipped_total", "Intervening cron matches skipped by committed advancements."),
-		ClaimTime:        histogram("claim_duration_seconds", "Elapsed time of a claim call, including empty polls."),
-		HandlerTime:      histogram("handler_duration_seconds", "Time spent invoking the handler."),
-		DispatchTime:     histogram("scheduler_operation_duration_seconds", "Time spent checking and dispatching one due schedule."),
-		Active:           prometheus.NewGauge(prometheus.GaugeOpts{Name: "relay_active_handlers", Help: "Handler invocations currently executing."}),
-		Requests:         prometheus.NewCounterVec(prometheus.CounterOpts{Name: "relay_http_requests_total", Help: "Completed HTTP requests by registered route and response code. Status 401 counts authentication failures."}, []string{"route", "status"}),
-		RequestTime:      prometheus.NewHistogramVec(prometheus.HistogramOpts{Name: "relay_http_request_duration_seconds", Help: "HTTP request service time."}, []string{"route"}),
-		Retries:          prometheus.NewCounterVec(prometheus.CounterOpts{Name: "relay_retries_total", Help: "Committed transitions that return jobs to the queue."}, []string{"reason"}),
+		WebhookResults:    prometheus.NewCounterVec(prometheus.CounterOpts{Name: "relay_webhook_deliveries_total", Help: "Completed handler invocations by delivery result."}, []string{"outcome"}),
+		WebhookDuration:   histogram("webhook_delivery_duration_seconds", "Duration of webhook delivery invocations."),
+		SignatureFailures: counter("webhook_signature_failures_total", "Rejected receiver authentication checks."),
+		Submitted:         counter("jobs_submitted_total", "Newly committed job records."),
+		Conflicts:         counter("submission_conflicts_total", "Conflicting submissions using an existing key."),
+		Attempts:          counter("execution_attempts_total", "Handler dispatches started."),
+		Completed:         counter("jobs_completed_total", "Committed successful completions."),
+		Failed:            counter("failed_attempts_total", "Attempts finalized as failed."),
+		RenewFailures:     counter("lease_renewal_failures_total", "Unsuccessful lease confirmations and renewals."),
+		Recovered:         counter("expired_attempts_recovered_total", "Expired attempts closed by the reaper."),
+		Timeouts:          counter("worker_timeouts_total", "Handler deadlines reached."),
+		Dispatched:        counter("scheduler_occurrences_dispatched_total", "New scheduled jobs committed."),
+		DispatchFailures:  counter("scheduler_dispatch_failures_total", "Unsuccessful scheduler operations excluding shutdown cancellation."),
+		Skipped:           counter("scheduler_occurrences_skipped_total", "Intervening cron matches skipped by committed advancements."),
+		ClaimTime:         histogram("claim_duration_seconds", "Elapsed time of a claim call, including empty polls."),
+		HandlerTime:       histogram("handler_duration_seconds", "Time spent invoking the handler."),
+		DispatchTime:      histogram("scheduler_operation_duration_seconds", "Time spent checking and dispatching one due schedule."),
+		Active:            prometheus.NewGauge(prometheus.GaugeOpts{Name: "relay_active_handlers", Help: "Handler invocations currently executing."}),
+		Requests:          prometheus.NewCounterVec(prometheus.CounterOpts{Name: "relay_http_requests_total", Help: "Completed HTTP requests by registered route and response code. Status 401 counts authentication failures."}, []string{"route", "status"}),
+		RequestTime:       prometheus.NewHistogramVec(prometheus.HistogramOpts{Name: "relay_http_request_duration_seconds", Help: "HTTP request service time."}, []string{"route"}),
+		Retries:           prometheus.NewCounterVec(prometheus.CounterOpts{Name: "relay_retries_total", Help: "Committed transitions that return jobs to the queue."}, []string{"reason"}),
 	}
-	r.MustRegister(m.Active, m.Requests, m.RequestTime, m.Retries)
+	r.MustRegister(m.WebhookResults, m.Active, m.Requests, m.RequestTime, m.Retries)
 	if pool != nil {
 		r.MustRegister(&snapshot{pool})
 	}

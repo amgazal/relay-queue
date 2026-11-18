@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"github.com/amgazal/relay-queue/internal/queue"
+	"github.com/amgazal/relay-queue/internal/webhook"
 	"github.com/amgazal/relay-queue/internal/worker"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -84,7 +85,14 @@ func run(ctx context.Context, log *slog.Logger) error {
 	}
 	defer pool.Close()
 	m := metrics.New(nil)
-	w, err := worker.New(queue.WithMetrics(pool, m), cfg, demos(), log)
+	sender, err := webhook.NewSender(os.Getenv("RELAY_WEBHOOK_DESTINATIONS"), m)
+	if err != nil {
+		return err
+	}
+	defer sender.Close()
+	handlers := demos()
+	handlers[webhook.Kind] = sender.Deliver
+	w, err := worker.New(queue.WithMetrics(pool, m), cfg, handlers, log)
 	if err != nil {
 		return err
 	}

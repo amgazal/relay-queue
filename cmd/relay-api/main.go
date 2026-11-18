@@ -80,6 +80,18 @@ func run(ctx context.Context, log *slog.Logger) error {
 	return srv.Shutdown(drain)
 }
 func main() {
+	if len(os.Args) == 2 && os.Args[1] == "ready" {
+		client := http.Client{Timeout: 2 * time.Second}
+		resp, err := client.Get("http://127.0.0.1:8080/readyz")
+		if err != nil {
+			os.Exit(1)
+		}
+		resp.Body.Close()
+		if resp.StatusCode != http.StatusOK {
+			os.Exit(1)
+		}
+		return
+	}
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer cancel()
 	log := slog.New(slog.NewJSONHandler(os.Stderr, nil))

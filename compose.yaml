@@ -1,3 +1,17 @@
+x-client: &client
+  PGUSER: ${POSTGRES_USER:-relay}
+  PGPASSWORD: ${POSTGRES_PASSWORD:-relay_local}
+  PGDATABASE: ${POSTGRES_DB:-relay}
+  PGHOST: db
+
+x-app: &app
+  depends_on:
+    migrate:
+      condition: service_completed_successfully
+  read_only: true
+  security_opt: [no-new-privileges:true]
+  cap_drop: [ALL]
+
 services:
   db:
     image: postgres:17
@@ -9,12 +23,100 @@ services:
       - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./migrations:/migrations:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
       interval: 2s
       timeout: 3s
       retries: 30
 
+  migrate:
+    image: postgres:17
+    depends_on:
+      db:
+        condition: service_healthy
+    environment: *client
+    volumes:
+      - ./migrations:/migrations:ro
+    command: ["psql", "-X", "-v", "ON_ERROR_STOP=1", "-f", "/migrations/apply.psql"]
+
+  api:
+    <<: *app
+    build: {context: ., target: api}
+    environment:
+      <<: *client
+      RELAY_DATABASE_URL: postgres://db
+      RELAY_API_ADDR: 0.0.0.0:8080
+      RELAY_API_KEY: ${RELAY_API_KEY:-}
+      RELAY_API_METRICS_ADDR: ${RELAY_API_METRICS_ADDR-127.0.0.1:9091}
+      RELAY_MAX_ACTIVE_JOBS: ${RELAY_MAX_ACTIVE_JOBS:-0}
+      RELAY_SCHEDULER_INTERVAL: ${RELAY_SCHEDULER_INTERVAL:-1s}
+    ports:
+      - "127.0.0.1:${RELAY_API_PORT:-8080}:8080"
+    healthcheck:
+      test: ["CMD", "/relay-api", "ready"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+    stop_grace_period: 20s
+
+  worker:
+    <<: *app
+    build: {context: ., target: worker}
+    environment:
+      <<: *client
+      RELAY_DATABASE_URL: postgres://db
+      RELAY_CONCURRENCY: ${RELAY_CONCURRENCY:-4}
+      RELAY_LEASE: ${RELAY_LEASE:-30s}
+      RELAY_POLL_INTERVAL: ${RELAY_POLL_INTERVAL:-250ms}
+      RELAY_REAP_INTERVAL: ${RELAY_REAP_INTERVAL:-5s}
+      RELAY_HANDLER_TIMEOUT: ${RELAY_HANDLER_TIMEOUT:-1m}
+      RELAY_SHUTDOWN_GRACE: 20s
+      RELAY_WORKER_METRICS_ADDR: ${RELAY_WORKER_METRICS_ADDR:-}
+      RELAY_WEBHOOK_DESTINATIONS: ${RELAY_WEBHOOK_DESTINATIONS:-}
+      SSL_CERT_DIR: /demo-trust
+    volumes:
+      - demo-trust:/demo-trust:ro
+    stop_grace_period: 35s
+
+  demo-cert:
+    profiles: [demo]
+    image: postgres:17
+    volumes:
+      - demo-trust:/trust
+      - demo-key:/private
+    entrypoint: ["/bin/sh", "-ec"]
+    command:
+      - |
+        if ! test -s /private/key.pem || ! openssl x509 -checkend 86400 -noout -in /trust/receiver.pem >/dev/null 2>&1; then
+          umask 077
+          openssl req -x509 -newkey rsa:2048 -nodes -days 30 -subj /CN=receiver \
+            -addext subjectAltName=DNS:receiver -keyout /private/key.pem -out /trust/receiver.pem
+        fi
+        chown 65532:65532 /private/key.pem
+        chmod 400 /private/key.pem
+        chmod 444 /trust/receiver.pem
+
+  receiver:
+    <<: *app
+    profiles: [demo]
+    build: {context: ., target: receiver}
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+      demo-cert: {condition: service_completed_successfully}
+    environment:
+      <<: *client
+      RELAY_DATABASE_URL: postgres://db
+      RELAY_RECEIVER_ADDR: 0.0.0.0:8082
+      RELAY_RECEIVER_TLS_KEY: /private/key.pem
+      RELAY_RECEIVER_TLS_CERT: /trust/receiver.pem
+      RELAY_DEMO_SIGNING_SECRET: ${RELAY_DEMO_SIGNING_SECRET:-}
+      RELAY_DEMO_FAIL_FIRST: ${RELAY_DEMO_FAIL_FIRST:-false}
+    volumes:
+      - demo-key:/private:ro
+      - demo-trust:/trust:ro
+    stop_grace_period: 10s
+
 volumes:
   pgdata:
+  demo-trust:
+  demo-key:
