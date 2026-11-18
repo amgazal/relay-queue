@@ -1,6 +1,6 @@
 # Relay
 
-Relay is a Go background job queue backed by PostgreSQL 17. Phase 0 provides the database schema, a local development environment, and two executable entry points. Both commands currently print a startup message and exit.
+Relay is a Go background job queue backed by PostgreSQL 17. Phase 1 implements the durable queue engine in `internal/queue` using pgx/v5 and a shared connection pool. Both commands currently print a startup message and exit.
 
 ## Local development
 
@@ -30,10 +30,31 @@ make build test vet
 
 A job has one of five states: `queued`, `running`, `succeeded`, `dead`, or `cancelled`. A queued job's `available_at` supports both delayed submission and retry backoff. The optional idempotency key is unique across submissions. A client can reuse a key when it is unsure whether a submission reached the API. Partial indexes cover queued jobs by eligibility time and running jobs by lease expiration.
 
-## Execution model planned for later phases
+## State transitions
 
-A worker will use a short transaction and `FOR UPDATE SKIP LOCKED` to claim work. This lets another worker skip rows already locked by its peers. Each claim will create an attempt and a fresh token. The worker will commit before running the handler. Heartbeats and completion updates must match the active token and an unexpired lease. Recovery will close expired attempts and either return the job to the queue or mark it dead when its attempts are exhausted.
+| Operation | Transition | Rule |
+| --- | --- | --- |
+| Enqueue | New → queued | A global key identifies one submission. Reuse returns the current job if kind, JSON value, priority, requested schedule, and effective attempt limit match. |
+| Claim | Queued → running | Select due jobs by descending priority, then eligibility time and ID. Skip locked rows. Increment the counter and insert one open attempt with a fresh token atomically. |
+| Heartbeat | Running → running | The owning worker can extend its live lease using PostgreSQL time. |
+| Complete | Running → succeeded | Close the open attempt and record the job completion time. |
+| Fail or reap | Running → queued or dead | Close the attempt as failed or expired. Clear ownership. Exhausted jobs become dead. |
 
-Delivery will be **at least once**. For example, a webhook recipient might accept a request just before the worker crashes. The next worker may send it again. Submission keys prevent duplicate job records, while handlers and recipients must account for repeated execution.
+Workers execute handlers after the claim commits. Completion, failure, and heartbeat lock the job and check its worker, token, state, and deadline. A worker that resumes after losing its lease cannot overwrite a newer attempt. Reapers skip locked jobs and process at most the requested batch size. Cancelled is reserved for a future management operation.
 
-Queue operations, the pgx data access layer, HTTP endpoints, worker execution, and webhook delivery are future phases. This foundation includes executable smoke tests and live schema checks. Testcontainers integration tests, CI, and benchmarks will accompany later implementation work.
+The default limit is five attempts. Each retry waits a random duration between half and all of a ceiling that starts at one second, doubles per attempt, and caps at five minutes. Scheduling uses PostgreSQL timestamp precision (microseconds). An omitted schedule means immediately eligible and remains distinct from an explicit timestamp. Migration 002 infers the original schedule for Phase 0 rows from their stored eligibility and creation times.
+
+Delivery is **at least once**. A webhook recipient might accept a request just before a worker crashes. Recovery can cause a second delivery, so handlers should use an idempotency mechanism for external effects.
+
+## Testing the engine
+
+Run the following against the local Compose instance with its default credentials. Adjust the connection string for custom settings.
+
+```sh
+make migrate
+RELAY_TEST_DATABASE_URL=postgres://relay:relay_local@localhost:5432/relay go test -count=1 -race ./...
+```
+
+Each integration test creates its own schema, applies the versioned SQL files, and removes that schema on cleanup. The database user needs schema creation privileges. Without the connection string, Go skips these database tests. Tests force expiration and retry eligibility through database timestamps so they can exercise recovery without sleeping.
+
+The API, worker pool, webhook delivery, and background reaper loop are future phases. Applications using the package must call recovery periodically for abandoned jobs to progress.
