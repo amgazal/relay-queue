@@ -1,0 +1,14 @@
+\set ON_ERROR_STOP on
+BEGIN;
+-- Serialize concurrent Relay migration commands.
+SELECT pg_advisory_xact_lock(78235619);
+CREATE TABLE IF NOT EXISTS schema_migrations (
+    version integer PRIMARY KEY,
+    applied_at timestamptz NOT NULL DEFAULT now()
+);
+SELECT NOT EXISTS (SELECT FROM schema_migrations WHERE version = 1) AS apply_v1 \gset
+\if :apply_v1
+    \ir 001_jobs.sql
+    INSERT INTO schema_migrations (version) VALUES (1);
+\endif
+COMMIT;
